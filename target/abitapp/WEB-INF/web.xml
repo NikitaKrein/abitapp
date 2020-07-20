@@ -1,0 +1,319 @@
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+         id="WebApp_ID" version="2.5">
+
+  <display-name>Archetype Created Web Application</display-name>
+
+  <servlet>
+    <servlet-name>signInButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>sign_in_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>signInButton</servlet-name>
+    <url-pattern>/signInButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>signOutButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>sign_out_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>signOutButton</servlet-name>
+    <url-pattern>/signOutButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>signUpButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>sign_up_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>signUpButton</servlet-name>
+    <url-pattern>/signUpButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>submitForFacultyButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>submit_for_faculty_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>submitForFacultyButton</servlet-name>
+    <url-pattern>/submitForFacultyButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>mainPage</servlet-name>
+    <jsp-file>/index.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>mainPage</servlet-name>
+    <url-pattern>/</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>university</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>university_catalog</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>university</servlet-name>
+    <url-pattern>/university/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>faculty</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>faculty_page</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>faculty</servlet-name>
+    <url-pattern>/faculty/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>signIn</servlet-name>
+    <jsp-file>/signIn.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>signIn</servlet-name>
+    <url-pattern>/signIn</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>signUp</servlet-name>
+    <jsp-file>/signUp.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>signUp</servlet-name>
+    <url-pattern>/signUp</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>profile</servlet-name>
+    <jsp-file>/profile.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>profile</servlet-name>
+    <url-pattern>/profile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>profileDirectory</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>profile</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>profileDirectory</servlet-name>
+    <url-pattern>/profile/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>editProfileButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>edit_profile_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>editProfileButton</servlet-name>
+    <url-pattern>/editProfileButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminProfile</servlet-name>
+    <jsp-file>/adminProfile.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminProfile</servlet-name>
+    <url-pattern>/admin/profile</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>editAdminInformation</servlet-name>
+    <jsp-file>/adminEditInformation.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>editAdminInformation</servlet-name>
+    <url-pattern>/admin/edit</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>editAdminSpecialtyInformation</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>edit_admin_specialty_information</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>editAdminSpecialtyInformation</servlet-name>
+    <url-pattern>/admin/edit/specialty</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>editAdminInformationButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>edit_admin_information_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>editAdminInformationButton</servlet-name>
+    <url-pattern>/editAdminInformationButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminEditSpecialtyExamButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>admin_edit_specialty_exam_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminEditSpecialtyExamButton</servlet-name>
+    <url-pattern>/editSpecialtyExamButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminRequests</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>admin_requests</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminRequests</servlet-name>
+    <url-pattern>/admin/requests</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminRequestsButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>admin_requests_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminRequestsButton</servlet-name>
+    <url-pattern>/adminRequestsButton</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminRating</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>admin_rating</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminRating</servlet-name>
+    <url-pattern>/admin/rating</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminUpdatePassword</servlet-name>
+    <jsp-file>/adminUpdatePassword.jsp</jsp-file>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminUpdatePassword</servlet-name>
+    <url-pattern>/admin/password</url-pattern>
+  </servlet-mapping>
+
+  <servlet>
+    <servlet-name>adminUpdatePasswordButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>admin_update_password_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>adminUpdatePasswordButton</servlet-name>
+    <url-pattern>/adminUpdatePasswordButton</url-pattern>
+  </servlet-mapping>
+
+
+
+  <filter>
+    <filter-name>UserSessionFilter</filter-name>
+    <filter-class>by.epam.krein.abitapp.filter.UserSessionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>UserSessionFilter</filter-name>
+    <url-pattern>/profile/*</url-pattern>
+    <url-pattern>/profile.jsp</url-pattern>
+    <url-pattern>/personalInfo.jsp</url-pattern>
+    <url-pattern>/rating.jsp</url-pattern>
+    <url-pattern>/requests.jsp</url-pattern>
+    <url-pattern>/editProfile.jsp</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>AdminSessionFilter</filter-name>
+    <filter-class>by.epam.krein.abitapp.filter.AdminSessionFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminSessionFilter</filter-name>
+    <url-pattern>/admin/*</url-pattern>
+    <url-pattern>/adminProfile.jsp</url-pattern>
+    <url-pattern>/adminEditInformation.jsp</url-pattern>
+    <url-pattern>/adminEditSpecialty.jsp</url-pattern>
+    <url-pattern>/adminFacultyRating.jsp</url-pattern>
+    <url-pattern>/adminRequests.jsp</url-pattern>
+    <url-pattern>/adminUpdatePassword.jsp</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>AdminSpecialtyEditFilter</filter-name>
+    <filter-class>by.epam.krein.abitapp.filter.AdminSpecialtyEditFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>AdminSpecialtyEditFilter</filter-name>
+    <url-pattern>/admin/edit/specialty</url-pattern>
+  </filter-mapping>
+
+  <filter>
+    <filter-name>LoginFilter</filter-name>
+    <filter-class>by.epam.krein.abitapp.filter.LoginFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>LoginFilter</filter-name>
+    <url-pattern>/signIn</url-pattern>
+    <url-pattern>/signUp</url-pattern>
+    <url-pattern>/signIn.jsp</url-pattern>
+    <url-pattern>/signUp.jsp</url-pattern>
+  </filter-mapping>
+
+
+</web-app>

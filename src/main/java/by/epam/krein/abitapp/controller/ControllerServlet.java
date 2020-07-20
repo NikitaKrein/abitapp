@@ -1,0 +1,52 @@
+package by.epam.krein.abitapp.controller;
+
+import by.epam.krein.abitapp.exception.CommandException;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
+
+public class ControllerServlet extends HttpServlet {
+
+    @Override
+    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        callCommand(req, resp);
+    }
+
+    @Override
+    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        callCommand(req, resp);
+    }
+
+    public void callCommand(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        //CommandProvider commandProvider = new CommandProvider();
+        //Command command = commandProvider.getCommand(commandName.toString());
+        CommandName commandName = getCommandName();
+        Command command = commandName.getCommand();
+        CommandName nextCommand = null;
+        try {
+            nextCommand = command.callCommandMethod(req, resp);
+        } catch (CommandException exception) {
+            //logger.error("Failed smth название команды", e);
+
+            //перекинуться на jsp  с error
+            exception.printStackTrace(); // Записать в лог
+        }
+        if (commandName.toString().matches(".+BUTTON")) {
+            resp.sendRedirect(req.getContextPath() + nextCommand.getJspAddress());
+            //resp.sendRedirect(req.getHeader("referer"));
+        } else {
+            req.getRequestDispatcher(nextCommand.getJspAddress()).forward(req, resp);
+        }
+    }
+
+    private CommandName getCommandName() {
+        String commandName = getServletConfig().getInitParameter("command").toUpperCase().replace(" ", "_");
+        //String commandName = req.getParameter(parameter).toUpperCase().replace(" ", "_");
+        return CommandName.valueOf(commandName);
+    }
+
+}
