@@ -5,6 +5,7 @@ import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.Admin;
 import by.epam.krein.abitapp.entity.Exam;
 import by.epam.krein.abitapp.entity.Specialty;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 
@@ -27,8 +28,8 @@ public class AdminUpdateSpecialtyExamsButton implements Command {
         Specialty specialty = null;
         try {
             specialty = specialtyService.findById(id);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
 
         List<Specialty> specialties = null;
@@ -54,8 +55,8 @@ public class AdminUpdateSpecialtyExamsButton implements Command {
         }
         try {
             specialties = specialtyService.findSpecialtiesByFacultyId(admin.getUniversity().getId());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         req.getSession().setAttribute("specialties", specialties);
         return CommandName.ADMIN_EDIT_SPECIALTY_EXAM_BUTTON;
@@ -68,8 +69,8 @@ public class AdminUpdateSpecialtyExamsButton implements Command {
             if(exam != newExam){
                 try {
                     specialtyService.updateSpecialtyExam(specialty.getId(), exam.toString(), newExam.toString());
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch(RuntimeException exception){
+                    throw new CommandException("message", exception);
                 }
             }
         }
@@ -78,8 +79,8 @@ public class AdminUpdateSpecialtyExamsButton implements Command {
     private void deleteExam(String exam, HttpServletRequest req, Specialty specialty){
         try {
             specialtyService.deleteSpecialtyExam(specialty.getId(), exam);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
     }
 
@@ -87,8 +88,8 @@ public class AdminUpdateSpecialtyExamsButton implements Command {
         String newExam = req.getParameter("newExam");
         try {
             specialtyService.createSpecialtyExam(specialty.getId(), newExam);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
     }
 

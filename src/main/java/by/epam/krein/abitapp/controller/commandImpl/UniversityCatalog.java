@@ -3,6 +3,7 @@ package by.epam.krein.abitapp.controller.commandImpl;
 import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.University;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UniversityService;
@@ -39,15 +40,15 @@ public class UniversityCatalog implements Command  {
         if(id == 0){
             try {
                 universities = universityService.findMain();
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch(RuntimeException exception){
+                throw new CommandException("message", exception);
             }
         }
         else{
             try {
                 universities = universityService.findByParentId(id);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            }catch(RuntimeException exception){
+                throw new CommandException("message", exception);
             }
         }
         req.setAttribute("universities", universities);

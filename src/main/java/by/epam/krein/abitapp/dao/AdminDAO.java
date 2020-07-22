@@ -7,7 +7,7 @@ import java.sql.SQLException;
 
 public interface AdminDAO {
     public void updatePassword(int id, String password) throws DAOException;
-    public void create(Admin admin) throws SQLException;
-    public void delete(Admin admin) throws SQLException;
-    public Admin findByEmail(String email) throws SQLException;
+    public void create(Admin admin) throws DAOException;
+    public void delete(Admin admin) throws DAOException;
+    public Admin findByEmail(String email) throws DAOException;
 }

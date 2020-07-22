@@ -6,6 +6,7 @@ import by.epam.krein.abitapp.entity.Admin;
 import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.entity.University;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.UniversityService;
@@ -35,8 +36,8 @@ public class AdminFacultyRating implements Command {
                     rating.add(Pair.of(specialty.getId(), Pair.of(i, specialtyService.getSpecialtyRating(specialty.getId(), i))));
                 }
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         req.setAttribute("rating", rating);
         return CommandName.ADMIN_RATING;

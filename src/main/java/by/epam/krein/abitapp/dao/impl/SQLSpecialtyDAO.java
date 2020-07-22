@@ -9,6 +9,7 @@ import by.epam.krein.abitapp.dao.UserDAO;
 import by.epam.krein.abitapp.entity.Exam;
 import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.DAOException;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.Connection;
@@ -20,9 +21,8 @@ import java.util.List;
 
 public class SQLSpecialtyDAO implements SpecialtyDAO {
 
-    private final Connection connection = Connector.getConnection();
+    //private final Connection connection = Connector.getConnection();
     //private final Connection connection = ConnectionDB.getConnection();
-
 
 
     /**
@@ -44,178 +44,228 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 
 
     @Override
-    public Specialty findById(int id) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()){
-            return setSpecialty(resultSet);
+    public Specialty findById(int id) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return setSpecialty(resultSet);
+            }
+            return null;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
         }
-        return null;
+
     }
 
-    private Specialty setSpecialty(ResultSet resultSet) throws SQLException {
+    private Specialty setSpecialty(ResultSet resultSet) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
 
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        UniversityDAO universityDAO = daoFactory.getUniversityDAO();
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UniversityDAO universityDAO = daoFactory.getUniversityDAO();
 
-        Specialty specialty = new Specialty();
-        specialty.setId(resultSet.getInt("id"));
-        specialty.setName(resultSet.getString("name"));
-        specialty.setInformation(resultSet.getString("information"));
-        specialty.setAdmissionPlanForFree(resultSet.getInt("admissionPlanForFree"));
-        specialty.setAdmissionPlanForPaid(resultSet.getInt("admissionPlanForPaid"));
-        specialty.setAdmissionPlanForCorrespondenceCourseForFree(resultSet.getInt("admissionPlanForCorrespondenceCourseForFree"));
-        specialty.setAdmissionPlanForCorrespondenceCourseForPaid(resultSet.getInt("admissionPlanForCorrespondenceCourseForPaid"));
-        specialty.setUniversity(universityDAO.findUniversity(resultSet.getInt("faculty_id")));
-        specialty.setNameOfExams(findSpecialtyExams(specialty.getId()));
-        return specialty;
-    }
-
-    @Override
-    public List<Specialty> findByFacultyId(int facultyId) throws SQLException{
-        List<Specialty> specialties = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_FACULTY_ID);
-        preparedStatement.setInt(1, facultyId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while(resultSet.next()){
-            specialties.add(setSpecialty(resultSet));
+            Specialty specialty = new Specialty();
+            specialty.setId(resultSet.getInt("id"));
+            specialty.setName(resultSet.getString("name"));
+            specialty.setInformation(resultSet.getString("information"));
+            specialty.setAdmissionPlanForFree(resultSet.getInt("admissionPlanForFree"));
+            specialty.setAdmissionPlanForPaid(resultSet.getInt("admissionPlanForPaid"));
+            specialty.setAdmissionPlanForCorrespondenceCourseForFree(resultSet.getInt("admissionPlanForCorrespondenceCourseForFree"));
+            specialty.setAdmissionPlanForCorrespondenceCourseForPaid(resultSet.getInt("admissionPlanForCorrespondenceCourseForPaid"));
+            specialty.setUniversity(universityDAO.findUniversity(resultSet.getInt("faculty_id")));
+            specialty.setNameOfExams(findSpecialtyExams(specialty.getId()));
+            return specialty;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
         }
-        return specialties;
     }
 
-
     @Override
-    public List<Exam> findSpecialtyExams(int id) throws SQLException {
-        List<Exam> exams = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_EXAMS);
-        preparedStatement.setInt(1, id);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while (resultSet.next()){
-            exams.add(Exam.valueOf(resultSet.getString("examName")));
+    public List<Specialty> findByFacultyId(int facultyId) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            List<Specialty> specialties = new ArrayList<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_FACULTY_ID);
+            preparedStatement.setInt(1, facultyId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                specialties.add(setSpecialty(resultSet));
+            }
+            return specialties;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
         }
-        return exams;
     }
 
+
     @Override
-    public List<Pair<User, Integer> > getSpecialtyRating(int specialtyId, int formOfTraining) throws SQLException {
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        UserDAO userDAO = daoFactory.getUserDAO();
-        List<Pair<User, Integer> > usersRating = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_SPECIALTY_RATING);
-        preparedStatement.setInt(1, specialtyId);
-        preparedStatement.setInt(2, specialtyId);
-        preparedStatement.setInt(3, formOfTraining);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while(resultSet.next()){
-            usersRating.add(Pair.of(userDAO.setUser(resultSet), resultSet.getInt("sumMark")));
+    public List<Exam> findSpecialtyExams(int id) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            List<Exam> exams = new ArrayList<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_EXAMS);
+            preparedStatement.setInt(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                exams.add(Exam.valueOf(resultSet.getString("examName")));
+            }
+            return exams;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
         }
-        return usersRating;
     }
 
     @Override
-    public void updateSpecialtyInformation(int id, String name, String information, int admissionPlanForFree, int admissionPlanForPaid, int admissionPlanForCorrespondenceCourseForFree, int admissionPlanForCorrespondenceCourseForPaid) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SPECIALTY);
-        preparedStatement.setString(1, name);
-        preparedStatement.setString(2, information);
-        preparedStatement.setInt(3, admissionPlanForFree);
-        preparedStatement.setInt(4, admissionPlanForPaid);
-        preparedStatement.setInt(5, admissionPlanForCorrespondenceCourseForFree);
-        preparedStatement.setInt(6, admissionPlanForCorrespondenceCourseForPaid);
-        preparedStatement.setInt(7, id);
-        preparedStatement.executeUpdate();
-    }
-
-//не интерфейс метода
-    public int findIdSpecialtyExam(int specialtyId, String exam) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_SPECIALTY_EXAM);
-        preparedStatement.setInt(1, specialtyId);
-        preparedStatement.setString(2, exam);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        if (resultSet.next()){
-            return resultSet.getInt("id");
+    public List<Pair<User, Integer>> getSpecialtyRating(int specialtyId, int formOfTraining) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
+            List<Pair<User, Integer>> usersRating = new ArrayList<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_SPECIALTY_RATING);
+            preparedStatement.setInt(1, specialtyId);
+            preparedStatement.setInt(2, specialtyId);
+            preparedStatement.setInt(3, formOfTraining);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                usersRating.add(Pair.of(userDAO.setUser(resultSet), resultSet.getInt("sumMark")));
+            }
+            return usersRating;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
         }
-        return -1;
     }
 
     @Override
-    public void updateSpecialtyExam(int specialtyId, String exam, String newExam) throws SQLException {
-        int id = findIdSpecialtyExam(specialtyId, exam);
-        PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SPECIALTY_EXAM);
-        preparedStatement.setString(1, newExam);
-        preparedStatement.setInt(2, id);
-        preparedStatement.executeUpdate();
+    public void updateSpecialtyInformation(int id, String name, String information, int admissionPlanForFree, int admissionPlanForPaid, int admissionPlanForCorrespondenceCourseForFree, int admissionPlanForCorrespondenceCourseForPaid) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SPECIALTY);
+            preparedStatement.setString(1, name);
+            preparedStatement.setString(2, information);
+            preparedStatement.setInt(3, admissionPlanForFree);
+            preparedStatement.setInt(4, admissionPlanForPaid);
+            preparedStatement.setInt(5, admissionPlanForCorrespondenceCourseForFree);
+            preparedStatement.setInt(6, admissionPlanForCorrespondenceCourseForPaid);
+            preparedStatement.setInt(7, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
+    }
+
+    //не интерфейс метода
+    public int findIdSpecialtyExam(int specialtyId, String exam) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_SPECIALTY_EXAM);
+            preparedStatement.setInt(1, specialtyId);
+            preparedStatement.setString(2, exam);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if (resultSet.next()) {
+                return resultSet.getInt("id");
+            }
+            return -1;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
     }
 
     @Override
-    public void deleteFacultyExam(int specialtyId, String exam) throws SQLException {
-        int id = findIdSpecialtyExam(specialtyId, exam);
-        PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SPECIALTY_EXAM);
-        preparedStatement.setInt(1, id);
-        preparedStatement.executeUpdate();
+    public void updateSpecialtyExam(int specialtyId, String exam, String newExam) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            int id = findIdSpecialtyExam(specialtyId, exam);
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SPECIALTY_EXAM);
+            preparedStatement.setString(1, newExam);
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
     }
 
     @Override
-    public void createFacultyExam(int specialtyId, String exam) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(CREATE_SPECIALTY_EXAM);
-        preparedStatement.setInt(1, specialtyId);
-        preparedStatement.setString(2, exam);
-        preparedStatement.executeUpdate();
+    public void deleteFacultyExam(int specialtyId, String exam) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            int id = findIdSpecialtyExam(specialtyId, exam);
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SPECIALTY_EXAM);
+            preparedStatement.setInt(1, id);
+            preparedStatement.executeUpdate();
+
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
+    }
+
+    @Override
+    public void createFacultyExam(int specialtyId, String exam) throws DAOException {
+        try {
+            Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_SPECIALTY_EXAM);
+            preparedStatement.setInt(1, specialtyId);
+            preparedStatement.setString(2, exam);
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
     }
 
 
-
-
-
-
-
-
-
-
-        @Override
-    public void createFacultyWithExam(Specialty specialty) throws SQLException {
+    @Override
+    public void createFacultyWithExam(Specialty specialty) throws DAOException {
         createFaculty(specialty);
         //createFacultyExam(specialty.getId(), );
 
     }
 
     @Override
-    public void createFaculty(Specialty specialty) throws SQLException {
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        UniversityDAO universityDAO = daoFactory.getUniversityDAO();
+    public void createFaculty(Specialty specialty) throws DAOException {
+        try (Connection connection = Connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_FACULTY)) {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UniversityDAO universityDAO = daoFactory.getUniversityDAO();
 
-        universityDAO.create(specialty);
-        PreparedStatement preparedStatement = connection.prepareStatement(CREATE_FACULTY);
-        preparedStatement.setInt(1, specialty.getAdmissionPlanForFree());
-        preparedStatement.setInt(2, specialty.getAdmissionPlanForPaid());
-        preparedStatement.setInt(3, specialty.getAdmissionPlanForCorrespondenceCourseForFree());
-        preparedStatement.setInt(4, specialty.getAdmissionPlanForCorrespondenceCourseForPaid());
-        preparedStatement.setInt(5, findUniversityId(specialty));
-        preparedStatement.executeUpdate();
+            universityDAO.create(specialty);
+            preparedStatement.setInt(1, specialty.getAdmissionPlanForFree());
+            preparedStatement.setInt(2, specialty.getAdmissionPlanForPaid());
+            preparedStatement.setInt(3, specialty.getAdmissionPlanForCorrespondenceCourseForFree());
+            preparedStatement.setInt(4, specialty.getAdmissionPlanForCorrespondenceCourseForPaid());
+            preparedStatement.setInt(5, findUniversityId(specialty));
+            preparedStatement.executeUpdate();
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
     }
 
     @Override
-    public int findUniversityId (Specialty specialty) throws SQLException {
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_UNIVERSITY);
-        preparedStatement.setString(1, specialty.getName());
-        preparedStatement.setInt(2, specialty.getUniversity().getId());
-        ResultSet resultSet = preparedStatement.executeQuery();
-        resultSet.next();
-        return resultSet.getInt("id");
+    public int findUniversityId(Specialty specialty) throws DAOException {
+        try (Connection connection = Connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_UNIVERSITY)) {
+            preparedStatement.setString(1, specialty.getName());
+            preparedStatement.setInt(2, specialty.getUniversity().getId());
+            ResultSet resultSet = preparedStatement.executeQuery();
+            resultSet.next();
+            return resultSet.getInt("id");
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        }
     }
 
 
     @Override
-    public void delete(Specialty specialty) throws SQLException {
-
+    public void delete(Specialty specialty) throws DAOException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         UniversityDAO universityDAO = daoFactory.getUniversityDAO();
-
         universityDAO.delete(universityDAO.findUniversity(findUniversityId(specialty)));
     }
 
     @Override
-    public Specialty findByUniversityId(int id) throws SQLException {
+    public Specialty findByUniversityId(int id) throws DAOException {
         Specialty specialty = new Specialty();
         return specialty;
     }
@@ -229,32 +279,35 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 //    }
 
     @Override
-    public List<Pair<User, Integer> > findUsersWithRequest(int specialtyId) throws SQLException {
+    public List<Pair<User, Integer>> findUsersWithRequest(int specialtyId) throws DAOException {
+        try (Connection connection = Connector.getConnection();
+             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS_WITH_REQUEST)) {
+            DAOFactory daoFactory = DAOFactory.getInstance();
+            UserDAO userDAO = daoFactory.getUserDAO();
 
-        DAOFactory daoFactory = DAOFactory.getInstance();
-        UserDAO userDAO = daoFactory.getUserDAO();
-
-        List<Pair<User, Integer> > users = new ArrayList<>();
-        PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS_WITH_REQUEST);
-        preparedStatement.setInt(1, specialtyId);
-        ResultSet resultSet = preparedStatement.executeQuery();
-        while(resultSet.next()){
-            User user = userDAO.setUser(resultSet);
-            int score = calculateUserSpecialtyScore(user.getId(), user.getRequestSpecialty().getId());
-            users.add(Pair.of(user, score));
+            List<Pair<User, Integer>> users = new ArrayList<>();
+            preparedStatement.setInt(1, specialtyId);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            while (resultSet.next()) {
+                User user = userDAO.setUser(resultSet);
+                int score = calculateUserSpecialtyScore(user.getId(), user.getRequestSpecialty().getId());
+                users.add(Pair.of(user, score));
+            }
+            return users;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
         }
-        return users;
     }
 
-    public int calculateUserSpecialtyScore (int userId, int specialtyId) throws SQLException {
+    public int calculateUserSpecialtyScore(int userId, int specialtyId) throws DAOException {
         DAOFactory daoFactory = DAOFactory.getInstance();
         UserDAO userDAO = daoFactory.getUserDAO();
         int score = 0;
         List<Exam> specialtyExams = findSpecialtyExams(specialtyId);
-        List<Pair<Exam, Integer> > userExamScore = userDAO.findUserExamScore(userId);
-        for(Exam specialtyExam : specialtyExams){
-            for(Pair<Exam, Integer> userExam : userExamScore){
-                if(specialtyExam == userExam.getKey()){
+        List<Pair<Exam, Integer>> userExamScore = userDAO.findUserExamScore(userId);
+        for (Exam specialtyExam : specialtyExams) {
+            for (Pair<Exam, Integer> userExam : userExamScore) {
+                if (specialtyExam == userExam.getKey()) {
                     score += userExam.getValue();
                     break;
                 }
@@ -264,14 +317,8 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
     }
 
 
-
-
-
-
-
-
     @Override
-    public List<User> findFacultyUsers(int facultyId) throws SQLException {
+    public List<User> findFacultyUsers(int facultyId) throws DAOException {
 
         DAOFactory daoFactory = DAOFactory.getInstance();
         UserDAO userDAO = daoFactory.getUserDAO();

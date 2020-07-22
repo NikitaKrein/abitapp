@@ -5,6 +5,7 @@ import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.Admin;
 import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.entity.University;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.AdminService;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
@@ -34,8 +35,8 @@ public class EditAdminInformationButton implements Command {
             String information = req.getParameter("information");
             try {
                 universityService.updateUniversity(name, information, id);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch(RuntimeException exception){
+                throw new CommandException("message", exception);
             }
         }
         if(req.getParameter("button").equals("specialty")){
@@ -48,8 +49,8 @@ public class EditAdminInformationButton implements Command {
             int admissionPlanForCorrespondenceCourseForPaid = Integer.parseInt(req.getParameter("admissionPlanForCorrespondenceCourseForPaid"));
             try {
                 specialtyService.updateSpecialty(id, name, information, admissionPlanForFree, admissionPlanForPaid, admissionPlanForCorrespondenceCourseForFree, admissionPlanForCorrespondenceCourseForPaid);
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch(RuntimeException exception){
+                throw new CommandException("message", exception);
             }
         }
         admin = adminService.findByEmail(admin.getEmail());
@@ -58,8 +59,8 @@ public class EditAdminInformationButton implements Command {
             List<Specialty> specialties = null;
             try {
                 specialties = specialtyService.findSpecialtiesByFacultyId(admin.getUniversity().getId());
-            } catch (SQLException throwables) {
-                throwables.printStackTrace();
+            } catch(RuntimeException exception){
+                throw new CommandException("message", exception);
             }
             req.getSession().setAttribute("specialties", specialties);
         }

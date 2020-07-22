@@ -3,6 +3,7 @@ package by.epam.krein.abitapp.controller.commandImpl;
 import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
 import by.epam.krein.abitapp.service.impl.UserServiceImpl;
@@ -42,8 +43,8 @@ public class EditProfileButton implements Command {
                 userSession.setAttribute("user", user);
                 return CommandName.PROFILE;
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         return CommandName.PROFILE;
     }

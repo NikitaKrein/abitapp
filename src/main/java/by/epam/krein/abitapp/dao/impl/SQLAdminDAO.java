@@ -36,13 +36,11 @@ public class SQLAdminDAO implements AdminDAO {
 
     @Override
     public void updatePassword(int id, String password) throws DAOException {
-        try {
-            Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ADMIN_PASSWORD);
+        try(Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ADMIN_PASSWORD)) {
             preparedStatement.setString(1, password);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
-            //connection.close();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
         }
@@ -51,9 +49,8 @@ public class SQLAdminDAO implements AdminDAO {
 
     @Override
     public void create(Admin admin) throws DAOException {
-        try {
-            Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ADMIN);
+        try(Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ADMIN)) {
             preparedStatement.setString(1, admin.getEmail());
             preparedStatement.setString(2, admin.getPassword());
             preparedStatement.setInt(3, admin.getUniversity().getId());
@@ -64,10 +61,9 @@ public class SQLAdminDAO implements AdminDAO {
     }
 
     @Override
-    public void delete(Admin admin) throws SQLException {
-        try {
-            Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ADMIN);
+    public void delete(Admin admin) throws DAOException {
+        try(Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_ADMIN)) {
             preparedStatement.setInt(1, admin.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
@@ -77,9 +73,8 @@ public class SQLAdminDAO implements AdminDAO {
 
     @Override
     public Admin findByEmail(String email) throws DAOException {
-        try {
-            Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ADMIN_BY_EMAIL);
+        try(Connection connection = Connector.getConnection();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ADMIN_BY_EMAIL)) {
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -93,8 +88,6 @@ public class SQLAdminDAO implements AdminDAO {
 
     private Admin setAdmin(ResultSet resultSet) throws DAOException{
         try {
-            Connection connection = Connector.getConnection();
-
             DAOFactory daoFactory = DAOFactory.getInstance();
             UniversityDAO sqlUniversityDAO = daoFactory.getUniversityDAO();
             SpecialtyDAO sqlSpecialtyDAO = daoFactory.getSpecialtyDAO();

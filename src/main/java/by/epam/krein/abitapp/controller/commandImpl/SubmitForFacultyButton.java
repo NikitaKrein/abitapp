@@ -3,6 +3,7 @@ package by.epam.krein.abitapp.controller.commandImpl;
 import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
@@ -33,18 +34,16 @@ public class SubmitForFacultyButton implements Command {
 
         try {
             userService.updateUserRequest(id, formOfTraining, user.getId());
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
 
         try {
             user = userService.findUserById(user.getId());
             req.getSession().setAttribute("user", user);
             return CommandName.PROFILE;
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
-
-        return CommandName.SUBMIT_FOR_FACULTY_BUTTON;
     }
 }

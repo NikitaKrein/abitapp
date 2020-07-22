@@ -4,6 +4,7 @@ import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.Exam;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SecurityService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
@@ -46,8 +47,8 @@ public class SignUpButton implements Command {
                 req.getSession().setAttribute("user", user);
                 return CommandName.PROFILE;
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         return CommandName.SIGN_UP_BUTTON;
     }

@@ -5,6 +5,7 @@ import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.Exam;
 import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import org.apache.commons.lang3.tuple.Pair;
@@ -39,8 +40,8 @@ public class FacultyRating implements Command {
                 }
                 usersRating.add(Pair.of(user, sumOfMarks));
             }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         req.setAttribute("usersRating", usersRating);
         return null;

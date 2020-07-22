@@ -11,8 +11,10 @@ import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 
 public class runner {
-    public static void main(String[] args) throws SQLException {
+    public static final int END = Integer.MAX_VALUE;
+    public static final int START = END - 100;
 
+    public static void main(String[] args) throws SQLException {
         String password = "hash";
         String script = BCrypt.withDefaults().hashToString(12,password.toCharArray());
         System.out.println(script);

@@ -6,6 +6,7 @@ import by.epam.krein.abitapp.entity.Exam;
 import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.entity.University;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UniversityService;
@@ -40,15 +41,15 @@ public class FacultyPage implements Command {
         try {
             faculty = universityService.findUniversityById(id);
             prepareSpecialties = specialtyService.findSpecialtiesByFacultyId(id);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         for (Specialty specialty : prepareSpecialties){
             for (int i = 1; i < 5; i++){
                 try {
                     rating.add(Pair.of(specialty.getId(), Pair.of(i, specialtyService.getSpecialtyRating(specialty.getId(), i))));
-                } catch (SQLException throwables) {
-                    throwables.printStackTrace();
+                } catch(RuntimeException exception){
+                    throw new CommandException("message", exception);
                 }
             }
             if(canSubmitFaculty(req, specialty)){

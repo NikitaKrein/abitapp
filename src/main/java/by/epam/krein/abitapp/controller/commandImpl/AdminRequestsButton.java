@@ -2,6 +2,7 @@ package by.epam.krein.abitapp.controller.commandImpl;
 
 import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
 
@@ -36,16 +37,16 @@ public class AdminRequestsButton implements Command {
     private void acceptedUser(int userId, int facultyId){
         try {
             userService.acceptedUpdateUserSpecialty(userId, facultyId);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
     }
 
     private void rejectUser(int userId, String message){
         try {
             userService.rejectUpdateUserSpecialty(userId, message);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
     }
 }

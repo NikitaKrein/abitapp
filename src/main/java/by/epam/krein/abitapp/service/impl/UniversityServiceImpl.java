@@ -4,6 +4,8 @@ import by.epam.krein.abitapp.dao.DAOFactory;
 import by.epam.krein.abitapp.dao.UniversityDAO;
 import by.epam.krein.abitapp.dao.UserDAO;
 import by.epam.krein.abitapp.entity.University;
+import by.epam.krein.abitapp.exception.DAOException;
+import by.epam.krein.abitapp.exception.ServiceException;
 import by.epam.krein.abitapp.service.UniversityService;
 
 import java.sql.SQLException;
@@ -15,18 +17,30 @@ public class UniversityServiceImpl implements UniversityService {
     UniversityDAO universityDAO = daoFactory.getUniversityDAO();
 
     @Override
-    public List<University> findMain() throws SQLException {
-        return universityDAO.findMain();
+    public List<University> findMain() throws ServiceException {
+        try {
+            return universityDAO.findMain();
+        } catch (DAOException daoException) {
+            throw new ServiceException("message", daoException);
+        }
     }
 
     @Override
-    public List<University> findByParentId(int parentId) throws SQLException {
-        return universityDAO.findByParentId(parentId);
+    public List<University> findByParentId(int parentId) throws ServiceException {
+        try {
+            return universityDAO.findByParentId(parentId);
+        } catch (DAOException daoException) {
+            throw new ServiceException("message", daoException);
+        }
     }
 
     @Override
-    public University findUniversityById(int id) throws SQLException{
-        return universityDAO.findUniversity(id);
+    public University findUniversityById(int id) throws ServiceException {
+        try {
+            return universityDAO.findUniversity(id);
+        } catch (DAOException daoException) {
+            throw new ServiceException("message", daoException);
+        }
     }
 
 //    @Override
@@ -35,7 +49,11 @@ public class UniversityServiceImpl implements UniversityService {
 //    }
 
     @Override
-    public void updateUniversity(String name, String information, int id) throws SQLException {
-        universityDAO.updateUniversity(name, information, id);
+    public void updateUniversity(String name, String information, int id) throws ServiceException {
+        try {
+            universityDAO.updateUniversity(name, information, id);
+        } catch (DAOException daoException) {
+            throw new ServiceException("message", daoException);
+        }
     }
 }

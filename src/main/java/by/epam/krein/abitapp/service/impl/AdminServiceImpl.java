@@ -16,7 +16,7 @@ public class AdminServiceImpl implements AdminService {
     AdminDAO adminDAO = daoFactory.getAdminDAO();
 
     @Override
-    public void updatePassword(int id, String password) {
+    public void updatePassword(int id, String password) throws ServiceException{
         try {
             adminDAO.updatePassword(id, password);
         } catch (DAOException daoException) {
@@ -25,12 +25,11 @@ public class AdminServiceImpl implements AdminService {
     }
 
     @Override
-    public Admin findByEmail(String email) {
+    public Admin findByEmail(String email) throws ServiceException {
         try {
             return adminDAO.findByEmail(email);
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
+        } catch (DAOException daoException) {
+            throw new ServiceException("message", daoException);
         }
-        return null;
     }
 }

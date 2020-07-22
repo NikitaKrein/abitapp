@@ -5,7 +5,10 @@ import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.Admin;
 import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.entity.User;
+import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.*;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -18,6 +21,8 @@ public class SignInButton implements Command {
     AdminService adminService = serviceFactory.getAdminService();
     SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
     SecurityService securityService = serviceFactory.getSecurityService();
+
+    private final Logger logger = LoggerFactory.getLogger(SignInButton.class);
 
 //    private UserService userService = new UserServiceImpl(); // fabrika potom
 //    private final AdminService adminService = new AdminServiceImpl();
@@ -36,6 +41,7 @@ public class SignInButton implements Command {
                 User user = userService.signIn(email);
                 if (user != null && securityService.equalsPassword(password, user.getPassword())) { // sdelat' norm proverky
                     req.getSession().setAttribute("user", user);
+                    logger.info(user.getEmail() + " sign in");
                     return CommandName.PROFILE;
                 }
                 else{
@@ -50,8 +56,8 @@ public class SignInButton implements Command {
                     }
                 }
             }
-        } catch (Exception e) {
-            e.printStackTrace();
+        } catch(RuntimeException exception){
+            throw new CommandException("message", exception);
         }
         req.getSession().removeAttribute("user");
         return CommandName.SIGN_IN_BUTTON;
