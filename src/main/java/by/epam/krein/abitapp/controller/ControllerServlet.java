@@ -1,6 +1,9 @@
 package by.epam.krein.abitapp.controller;
 
+import by.epam.krein.abitapp.controller.commandImpl.SignInButton;
 import by.epam.krein.abitapp.exception.CommandException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
@@ -10,6 +13,8 @@ import java.io.IOException;
 
 
 public class ControllerServlet extends HttpServlet {
+
+    private final Logger logger = LoggerFactory.getLogger(SignInButton.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -30,10 +35,9 @@ public class ControllerServlet extends HttpServlet {
         try {
             nextCommand = command.callCommandMethod(req, resp);
         } catch (CommandException exception) {
-            //logger.error("Failed smth название команды", e);
-
-            //перекинуться на jsp  с error
-            exception.printStackTrace(); // Записать в лог
+            logger.error("Failed something in  " + commandName.toString(), exception.getMessage());
+            resp.sendRedirect(req.getContextPath() + "/error");
+            //exception.printStackTrace(); // Записать в лог
         }
         if (commandName.toString().matches(".+BUTTON")) {
             resp.sendRedirect(req.getContextPath() + nextCommand.getJspAddress());
