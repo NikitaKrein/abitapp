@@ -14,7 +14,7 @@ import java.io.IOException;
 
 public class ControllerServlet extends HttpServlet {
 
-    private final Logger logger = LoggerFactory.getLogger(SignInButton.class);
+    private final Logger logger = LoggerFactory.getLogger(ControllerServlet.class);
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
@@ -35,9 +35,9 @@ public class ControllerServlet extends HttpServlet {
         try {
             nextCommand = command.callCommandMethod(req, resp);
         } catch (CommandException exception) {
-            logger.error("Failed something in  " + commandName.toString(), exception.getMessage());
+            logger.error("Failed something in " + commandName.toString(), exception);
             resp.sendRedirect(req.getContextPath() + "/error");
-            //exception.printStackTrace(); // Записать в лог
+            return;
         }
         if (commandName.toString().matches(".+BUTTON")) {
             resp.sendRedirect(req.getContextPath() + nextCommand.getJspAddress());
