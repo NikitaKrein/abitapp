@@ -7,8 +7,6 @@ import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 
 public class AdminRequestsButton implements Command {
 
@@ -16,7 +14,7 @@ public class AdminRequestsButton implements Command {
     UserService userService = serviceFactory.getUserService();
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
 
         String action  = req.getParameter("action");
         String[] subAction = action.split(" ");

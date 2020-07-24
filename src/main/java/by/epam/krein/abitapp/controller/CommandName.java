@@ -1,6 +1,7 @@
 package by.epam.krein.abitapp.controller;
 
 import by.epam.krein.abitapp.controller.commandImpl.*;
+import by.epam.krein.abitapp.controller.commandImpl.Error;
 
 public enum  CommandName {
     SIGN_IN_BUTTON("/signIn", new SignInButton()),
@@ -24,7 +25,9 @@ public enum  CommandName {
     EDIT_PROFILE("/editProfile.jsp", new Profile()),
     FACULTY_PAGE("/faculty.jsp", new FacultyPage()),
     LANGUAGE_BUTTON("/", new LanguageButton()),
+    ERROR("/error", new Error()),
     MAIN_PAGE("/", new MainPage());
+
 
     private final String jspAddress;
     private final Command command;

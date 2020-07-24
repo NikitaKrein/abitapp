@@ -6,12 +6,9 @@ import by.epam.krein.abitapp.entity.User;
 import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
-import by.epam.krein.abitapp.service.impl.UserServiceImpl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.sql.SQLException;
 
 public class EditProfileButton implements Command {
 
@@ -21,7 +18,7 @@ public class EditProfileButton implements Command {
     //private final UserService userService = new UserServiceImpl(); // fabrika potom
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         try {
             if (req.getMethod().equalsIgnoreCase("POST")) {
                 User user = (User) req.getSession().getAttribute("user");

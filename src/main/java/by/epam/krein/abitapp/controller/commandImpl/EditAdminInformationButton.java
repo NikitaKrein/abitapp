@@ -4,7 +4,6 @@ import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
 import by.epam.krein.abitapp.entity.Admin;
 import by.epam.krein.abitapp.entity.Specialty;
-import by.epam.krein.abitapp.entity.University;
 import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.AdminService;
 import by.epam.krein.abitapp.service.SpecialtyService;
@@ -12,8 +11,6 @@ import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UniversityService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
 
 public class EditAdminInformationButton implements Command {
@@ -27,7 +24,7 @@ public class EditAdminInformationButton implements Command {
 //    private final UniversityService universityService = new UniversityServiceImpl();
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         Admin admin = (Admin) req.getSession().getAttribute("admin");
         if (req.getParameter("button").equals("university")){
             int id = Integer.parseInt(req.getParameter("id"));

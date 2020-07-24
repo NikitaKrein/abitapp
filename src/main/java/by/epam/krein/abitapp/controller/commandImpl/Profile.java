@@ -12,7 +12,6 @@ import by.epam.krein.abitapp.service.UserService;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -28,7 +27,7 @@ public class Profile<T> implements Command {
 //    private final SpecialtyService facultyService = new SpecialtyServiceImpl(); // fabrika potom
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
 
         User user = null;
         try {

@@ -13,8 +13,6 @@ import by.epam.krein.abitapp.service.UniversityService;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -28,7 +26,7 @@ public class FacultyPage implements Command {
    // private final SpecialtyService facultyService = new SpecialtyServiceImpl(); // fabrika potom
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         University faculty = null;
         List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> rating = new ArrayList<>();
         List<Pair<Specialty, Boolean> > specialties = new ArrayList<>();

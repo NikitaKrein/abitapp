@@ -11,8 +11,6 @@ import by.epam.krein.abitapp.service.ServiceFactory;
 import org.apache.commons.lang3.tuple.Pair;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -23,7 +21,7 @@ public class FacultyRating implements Command {
     SpecialtyService facultyService = serviceFactory.getSpecialtyService();
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         Specialty specialty = (Specialty) req.getSession().getAttribute("faculty");
         List<Pair<User, Integer>> usersRating = new ArrayList<>();
         //Pair<User, Integer> w = Pair.of()

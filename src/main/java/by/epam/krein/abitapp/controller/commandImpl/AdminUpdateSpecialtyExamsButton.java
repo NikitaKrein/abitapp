@@ -10,8 +10,6 @@ import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -22,7 +20,7 @@ public class AdminUpdateSpecialtyExamsButton implements Command {
     //private final SpecialtyService facultyService = new SpecialtyServiceImpl(); // fabrika potom
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         int id = Integer.parseInt(req.getParameter("id"));
         Admin admin = (Admin) req.getSession().getAttribute("admin");
         Specialty specialty = null;

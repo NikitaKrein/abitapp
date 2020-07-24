@@ -11,7 +11,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class SignInButton implements Command {
@@ -33,7 +32,7 @@ public class SignInButton implements Command {
     }
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         try {
             if (req.getMethod().equalsIgnoreCase("POST")) {
                 String email = req.getParameter("email");

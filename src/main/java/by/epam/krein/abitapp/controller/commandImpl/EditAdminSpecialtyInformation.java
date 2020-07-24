@@ -7,7 +7,6 @@ import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 public class EditAdminSpecialtyInformation implements Command {
@@ -16,7 +15,7 @@ public class EditAdminSpecialtyInformation implements Command {
     SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         int id = Integer.parseInt(req.getParameter("id"));
         List<Specialty> specialties = (List<Specialty>) req.getSession().getAttribute("specialties");
         Specialty specialty = null;

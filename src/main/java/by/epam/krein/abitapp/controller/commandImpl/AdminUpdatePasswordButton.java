@@ -7,7 +7,6 @@ import by.epam.krein.abitapp.service.AdminService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
 public class AdminUpdatePasswordButton implements Command {
 
@@ -15,7 +14,7 @@ public class AdminUpdatePasswordButton implements Command {
     AdminService adminService = serviceFactory.getAdminService();
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
+    public CommandName callCommandMethod(HttpServletRequest req) {
         try {
             String password = req.getParameter("password");
             int id = Integer.parseInt(req.getParameter("id"));
