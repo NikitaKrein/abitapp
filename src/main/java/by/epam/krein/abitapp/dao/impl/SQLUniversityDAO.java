@@ -1,6 +1,6 @@
 package by.epam.krein.abitapp.dao.impl;
 
-import by.epam.krein.abitapp.ConnectionPool.Connector;
+import by.epam.krein.abitapp.connectionPool.Connector;
 import by.epam.krein.abitapp.connection.ConnectionDB;
 import by.epam.krein.abitapp.dao.UniversityDAO;
 import by.epam.krein.abitapp.entity.University;
@@ -39,8 +39,9 @@ public class SQLUniversityDAO implements UniversityDAO {
 
     @Override
     public University findUniversity(int parentId) throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setInt(1, parentId);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -50,6 +51,8 @@ public class SQLUniversityDAO implements UniversityDAO {
             }
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -71,8 +74,9 @@ public class SQLUniversityDAO implements UniversityDAO {
 
     @Override
     public List<University> findMain() throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_MAIN_UNIVERSITY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_MAIN_UNIVERSITY);
             List<University> universities = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -82,13 +86,16 @@ public class SQLUniversityDAO implements UniversityDAO {
             return universities;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public List<University> findByParentId(int id) throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_PARENT_ID)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_PARENT_ID);
             List<University> universities = new ArrayList<>();
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -99,27 +106,33 @@ public class SQLUniversityDAO implements UniversityDAO {
             return universities;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void updateUniversity(String name, String information, int id) throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_UNIVERSITY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_UNIVERSITY);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, information);
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
 
     @Override
     public void create(University university) throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_UNIVERSITY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_UNIVERSITY);
             preparedStatement.setString(1, university.getName());
             if (university.getUniversity() == null) {
                 preparedStatement.setObject(2, null);
@@ -130,14 +143,17 @@ public class SQLUniversityDAO implements UniversityDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
 
     @Override
     public List<University> findAll() throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL);
             List<University> universities = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -147,14 +163,18 @@ public class SQLUniversityDAO implements UniversityDAO {
             return universities;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void delete(University university) throws DAOException {
-        try(Connection connection = Connector.getConnection();
+        Connection connection = Connector.getConnection();
+        try {
             PreparedStatement firstPreparedStatement = connection.prepareStatement(DELETE_UNIVERSITY);
-            PreparedStatement secondPreparedStatement = connection.prepareStatement(FIND_BY_PARENT_ID)) {
+            PreparedStatement secondPreparedStatement = connection.prepareStatement(FIND_BY_PARENT_ID);
+
             firstPreparedStatement.setInt(1, university.getId());
             firstPreparedStatement.executeUpdate();
             secondPreparedStatement.setInt(1, university.getId());
@@ -165,6 +185,8 @@ public class SQLUniversityDAO implements UniversityDAO {
             }
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 

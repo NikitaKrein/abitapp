@@ -1,4 +1,4 @@
-package by.epam.krein.abitapp.ConnectionPool;
+package by.epam.krein.abitapp.connectionPool;
 
 import java.sql.Connection;
 import java.sql.Driver;
@@ -6,35 +6,33 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 public class Connector {
-    //private static Logger logger = Logger.getRootLogger();
 
-    private Connector() {
-    }
+    private static ConnectionPool connectionPool;
 
-    public static Connection getConnection() {
-
+    static {
         DataPropertiesForConnection data = DataPropertiesForConnectFactory.getInstance();
-        Connection connection = null;
-
         try {
 
             Driver driver = new com.mysql.cj.jdbc.Driver();
             DriverManager.registerDriver(driver);
-
-            Class.forName("com.mysql.cj.jdbc.Driver"); //нужен ли он ??
-
-            connection = BasicConnectionPool.create(
+            Class.forName("com.mysql.cj.jdbc.Driver");
+            connectionPool = BasicConnectionPool.create(
                     data.getUrl(),
                     data.getUser(),
-                    data.getPassword()).getConnection();
-
+                    data.getPassword());
         } catch (SQLException e) {
             //logger.error(e.getMessage());
         }
         catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+    }
 
-        return connection;
+    public static Connection getConnection(){
+        return connectionPool.getConnection();
+    }
+
+    public static void releaseConnection(Connection connection) {
+        connectionPool.releaseConnection(connection);
     }
 }

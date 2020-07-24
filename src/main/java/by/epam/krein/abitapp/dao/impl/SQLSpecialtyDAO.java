@@ -1,6 +1,6 @@
 package by.epam.krein.abitapp.dao.impl;
 
-import by.epam.krein.abitapp.ConnectionPool.Connector;
+import by.epam.krein.abitapp.connectionPool.Connector;
 import by.epam.krein.abitapp.connection.ConnectionDB;
 import by.epam.krein.abitapp.dao.DAOFactory;
 import by.epam.krein.abitapp.dao.SpecialtyDAO;
@@ -45,8 +45,8 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 
     @Override
     public Specialty findById(int id) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -56,14 +56,14 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return null;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
 
     }
 
     private Specialty setSpecialty(ResultSet resultSet) throws DAOException {
         try {
-            Connection connection = Connector.getConnection();
-
             DAOFactory daoFactory = DAOFactory.getInstance();
             UniversityDAO universityDAO = daoFactory.getUniversityDAO();
 
@@ -85,8 +85,8 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 
     @Override
     public List<Specialty> findByFacultyId(int facultyId) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             List<Specialty> specialties = new ArrayList<>();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_BY_FACULTY_ID);
             preparedStatement.setInt(1, facultyId);
@@ -97,14 +97,16 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return specialties;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
 
     @Override
     public List<Exam> findSpecialtyExams(int id) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             List<Exam> exams = new ArrayList<>();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_EXAMS);
             preparedStatement.setInt(1, id);
@@ -115,13 +117,15 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return exams;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public List<Pair<User, Integer>> getSpecialtyRating(int specialtyId, int formOfTraining) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             DAOFactory daoFactory = DAOFactory.getInstance();
             UserDAO userDAO = daoFactory.getUserDAO();
             List<Pair<User, Integer>> usersRating = new ArrayList<>();
@@ -136,13 +140,15 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return usersRating;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void updateSpecialtyInformation(int id, String name, String information, int admissionPlanForFree, int admissionPlanForPaid, int admissionPlanForCorrespondenceCourseForFree, int admissionPlanForCorrespondenceCourseForPaid) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SPECIALTY);
             preparedStatement.setString(1, name);
             preparedStatement.setString(2, information);
@@ -154,13 +160,15 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     //не интерфейс метода
     public int findIdSpecialtyExam(int specialtyId, String exam) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(FIND_SPECIALTY_EXAM);
             preparedStatement.setInt(1, specialtyId);
             preparedStatement.setString(2, exam);
@@ -171,13 +179,15 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return -1;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void updateSpecialtyExam(int specialtyId, String exam, String newExam) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             int id = findIdSpecialtyExam(specialtyId, exam);
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_SPECIALTY_EXAM);
             preparedStatement.setString(1, newExam);
@@ -185,13 +195,15 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void deleteFacultyExam(int specialtyId, String exam) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             int id = findIdSpecialtyExam(specialtyId, exam);
             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_SPECIALTY_EXAM);
             preparedStatement.setInt(1, id);
@@ -199,19 +211,23 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void createFacultyExam(int specialtyId, String exam) throws DAOException {
+        Connection connection = Connector.getConnection();
         try {
-            Connection connection = Connector.getConnection();
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_SPECIALTY_EXAM);
             preparedStatement.setInt(1, specialtyId);
             preparedStatement.setString(2, exam);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -225,8 +241,9 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 
     @Override
     public void createFaculty(Specialty specialty) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_FACULTY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_FACULTY);
             DAOFactory daoFactory = DAOFactory.getInstance();
             UniversityDAO universityDAO = daoFactory.getUniversityDAO();
 
@@ -239,13 +256,16 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public int findUniversityId(Specialty specialty) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_UNIVERSITY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_UNIVERSITY);
             preparedStatement.setString(1, specialty.getName());
             preparedStatement.setInt(2, specialty.getUniversity().getId());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -253,6 +273,8 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return resultSet.getInt("id");
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -280,8 +302,9 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
 
     @Override
     public List<Pair<User, Integer>> findUsersWithRequest(int specialtyId) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS_WITH_REQUEST)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USERS_WITH_REQUEST);
             DAOFactory daoFactory = DAOFactory.getInstance();
             UserDAO userDAO = daoFactory.getUserDAO();
 
@@ -296,6 +319,8 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             return users;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 

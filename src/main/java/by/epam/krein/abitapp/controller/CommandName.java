@@ -2,7 +2,7 @@ package by.epam.krein.abitapp.controller;
 
 import by.epam.krein.abitapp.controller.commandImpl.*;
 
-public enum CommandName {
+public enum  CommandName {
     SIGN_IN_BUTTON("/signIn", new SignInButton()),
     SIGN_UP_BUTTON("/signUp", new SignUpButton()),
     SIGN_OUT_BUTTON("/", new SignOutButton()),

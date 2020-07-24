@@ -1,4 +1,4 @@
-package by.epam.krein.abitapp.ConnectionPool;
+package by.epam.krein.abitapp.connectionPool;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -13,7 +13,7 @@ public class BasicConnectionPool implements ConnectionPool {
     private String password;
     private List<Connection> connectionPool;
     private List<Connection> usedConnections = new ArrayList<>();
-    private static int INITIAL_POOL_SIZE = 10;
+    private static int INITIAL_POOL_SIZE = 50;
 
     public BasicConnectionPool(String url, String user, String password, List<Connection> connectionPool) {
         this.url = url;

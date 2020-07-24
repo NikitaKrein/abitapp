@@ -1,4 +1,4 @@
-package by.epam.krein.abitapp.ConnectionPool;
+package by.epam.krein.abitapp.connectionPool;
 
 public class DataPropertiesForConnectFactory {
 

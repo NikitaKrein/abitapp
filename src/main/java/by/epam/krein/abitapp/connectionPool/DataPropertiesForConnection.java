@@ -1,4 +1,4 @@
-package by.epam.krein.abitapp.ConnectionPool;
+package by.epam.krein.abitapp.connectionPool;
 
 import java.io.IOException;
 import java.io.InputStream;

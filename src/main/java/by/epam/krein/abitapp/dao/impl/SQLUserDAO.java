@@ -1,6 +1,6 @@
 package by.epam.krein.abitapp.dao.impl;
 
-import by.epam.krein.abitapp.ConnectionPool.Connector;
+import by.epam.krein.abitapp.connectionPool.Connector;
 import by.epam.krein.abitapp.connection.ConnectionDB;
 import by.epam.krein.abitapp.dao.DAOFactory;
 import by.epam.krein.abitapp.dao.SpecialtyDAO;
@@ -56,10 +56,12 @@ public class SQLUserDAO implements UserDAO {
     private static final String REJECT_UPDATE_USER_SPECIALTY = "UPDATE user SET adminMessage = ? WHERE id = ?";
     private static final String FIND_USER_SCORE = "SELECT * FROM user_exam_mark WHERE user_id = ?";
 
+
     @Override
     public User findUserByEmail(String email) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -68,8 +70,25 @@ public class SQLUserDAO implements UserDAO {
             return null;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
+
+//    @Override
+//    public User findUserByEmail(String email) throws DAOException {
+//        try (Connection connection = Connector.getConnection();
+//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
+//            preparedStatement.setString(1, email);
+//            ResultSet resultSet = preparedStatement.executeQuery();
+//            if (resultSet.next()) {
+//                return setUser(resultSet);
+//            }
+//            return null;
+//        } catch (SQLException exception) {
+//            throw new DAOException("message", exception);
+//        }
+//    }
 
     @Override
     public User setUser(ResultSet resultSet) throws DAOException {
@@ -107,8 +126,9 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public Map<Exam, Integer> findUserExamMark(User user) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_EXAM_MARK)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_EXAM_MARK);
             Map<Exam, Integer> examMark = new HashMap<>();
             preparedStatement.setInt(1, user.getId());
             ResultSet resultSet = preparedStatement.executeQuery();
@@ -118,6 +138,8 @@ public class SQLUserDAO implements UserDAO {
             return examMark;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -132,8 +154,9 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public void createUser(User user) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getEmail());
@@ -142,13 +165,16 @@ public class SQLUserDAO implements UserDAO {
 
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void createUserExamMark(User user) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER_EXAM_MARK)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_USER_EXAM_MARK);
             int id = findUserIdByEmail(user.getEmail());
             for (Map.Entry<Exam, Integer> entry : user.getExamMarks().entrySet()) {
                 preparedStatement.setInt(1, id);
@@ -158,12 +184,15 @@ public class SQLUserDAO implements UserDAO {
             }
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     private int findUserIdByEmail(String email) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL);
             preparedStatement.setString(1, email);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -172,27 +201,33 @@ public class SQLUserDAO implements UserDAO {
             return -1;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void updateUserRequest(int requestSpecialtyId, int formOfTraining, int id) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_REQUEST)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_REQUEST);
             preparedStatement.setInt(1, requestSpecialtyId);
             preparedStatement.setInt(2, formOfTraining);
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public List<Pair<Exam, Integer>> findUserExamScore(int id) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_SCORE)) {
+        Connection connection = Connector.getConnection();
+        try {
             List<Pair<Exam, Integer>> userExamScore = new ArrayList<>();
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_SCORE);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -203,31 +238,39 @@ public class SQLUserDAO implements UserDAO {
             return userExamScore;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void acceptedUpdateUserSpecialty(int id, int specialtyId) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(ACCEPT_UPDATE_USER_SPECIALTY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(ACCEPT_UPDATE_USER_SPECIALTY);
             //preparedStatement.setObject(1, null);
             preparedStatement.setInt(1, specialtyId);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void rejectUpdateUserSpecialty(int id, String message) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(REJECT_UPDATE_USER_SPECIALTY)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(REJECT_UPDATE_USER_SPECIALTY);
             preparedStatement.setString(1, message);
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -236,27 +279,34 @@ public class SQLUserDAO implements UserDAO {
     }
 
     public void deleteView() throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_VIEW_WITH_SUM_MARK)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_VIEW_WITH_SUM_MARK);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     public void createView(int facultyId) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_VIEW_WITH_SUM_MARK)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_VIEW_WITH_SUM_MARK);
             preparedStatement.setInt(1, facultyId);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     public int findUserSumMark(int id) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_SUM_MARK)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_SUM_MARK);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -265,6 +315,8 @@ public class SQLUserDAO implements UserDAO {
             return 0;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -280,8 +332,9 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public int findRatingApprovedPattern(User user, String pattern) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(pattern)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(pattern);
             int facultyId;
             if (user.getSpecialty() == null) {
                 facultyId = user.getRequestSpecialty().getId();
@@ -298,6 +351,8 @@ public class SQLUserDAO implements UserDAO {
             return -1;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -313,8 +368,9 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public int findRatingAllPattern(User user, String pattern) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(pattern)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(pattern);
             int facultyId;
             if (user.getSpecialty() == null) {
                 facultyId = user.getRequestSpecialty().getId();
@@ -332,6 +388,8 @@ public class SQLUserDAO implements UserDAO {
             return -1;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
@@ -350,8 +408,9 @@ public class SQLUserDAO implements UserDAO {
 
     @Override
     public void update(User user) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER);
             preparedStatement.setString(1, user.getName());
             preparedStatement.setString(2, user.getSurname());
             preparedStatement.setString(3, user.getEmail());
@@ -380,24 +439,30 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public void delete(User user) throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_USER);
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
     @Override
     public List<User> findAll() throws DAOException {
-        try (Connection connection = Connector.getConnection();
-             PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_ALL);
             List<User> users = new ArrayList<>();
             ResultSet resultSet = preparedStatement.executeQuery();
             while (resultSet.next()) {
@@ -407,14 +472,17 @@ public class SQLUserDAO implements UserDAO {
             return users;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 
 
     @Override
     public User findUserById(int id) throws DAOException {
-        try(Connection connection = Connector.getConnection();
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID)) {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_ID);
             preparedStatement.setInt(1, id);
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
@@ -423,6 +491,8 @@ public class SQLUserDAO implements UserDAO {
             return null;
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
         }
     }
 }
