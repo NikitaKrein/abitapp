@@ -15,10 +15,6 @@ public class UniversityCatalog implements Command {
 
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     UniversityService universityService = serviceFactory.getUniversityService();
-    SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
-
-    //private final UniversityService universityService = new UniversityServiceImpl(); // fabrika potom
-    //private final SpecialtyService facultyService = new SpecialtyServiceImpl();
 
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) throws CommandException{
