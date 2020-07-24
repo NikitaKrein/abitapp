@@ -9,49 +9,52 @@ import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UniversityService;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.sql.SQLException;
 import java.util.List;
 
-public class UniversityCatalog implements Command  {
+public class UniversityCatalog implements Command {
 
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     UniversityService universityService = serviceFactory.getUniversityService();
-    SpecialtyService facultyService = serviceFactory.getSpecialtyService();
+    SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
 
     //private final UniversityService universityService = new UniversityServiceImpl(); // fabrika potom
     //private final SpecialtyService facultyService = new SpecialtyServiceImpl();
 
     @Override
-    public CommandName callCommandMethod(HttpServletRequest req, HttpServletResponse resp) {
-        List<University> universities = null;
-        int id;
-
-        if(req.getPathInfo() == null){
-            id = 0;
+    public CommandName callCommandMethod(HttpServletRequest req) throws CommandException{
+        String categoryId = getCatalogCategoryId(req);
+        if(checkCategoryId(categoryId)){
+            return CommandName.ERROR.getCommand().callCommandMethod(req);
         }
-        else{
+        try {
+            List<University> universities = getCategoryList(req, Integer.parseInt(categoryId));
+            req.setAttribute("universities", universities);
+        } catch (RuntimeException exception) {
+            throw new CommandException("message", exception);
+        }
+        return CommandName.UNIVERSITY_CATALOG;
+    }
+
+    private String getCatalogCategoryId(HttpServletRequest req) {
+        if (req.getPathInfo() == null) {
+            return "0";
+        } else {
             StringBuilder prepareId = new StringBuilder(req.getPathInfo());
             prepareId.deleteCharAt(0);
-            //prepareId.toString().matches("^/+\\d*")
-            id = Integer.parseInt(prepareId.toString());
+            return prepareId.toString();
         }
+    }
 
-        if(id == 0){
-            try {
-                universities = universityService.findMain();
-            } catch(RuntimeException exception){
-                throw new CommandException("message", exception);
-            }
+    private List<University> getCategoryList(HttpServletRequest req, int catalogCategoryId) {
+        if (catalogCategoryId == 0) {
+            return universityService.findMain();
         }
-        else{
-            try {
-                universities = universityService.findByParentId(id);
-            }catch(RuntimeException exception){
-                throw new CommandException("message", exception);
-            }
+        else {
+            return universityService.findByParentId(catalogCategoryId);
         }
-        req.setAttribute("universities", universities);
-        return CommandName.UNIVERSITY_CATALOG;
+    }
+
+    private boolean checkCategoryId(String prepareCategoryId){
+        return !prepareCategoryId.toString().matches("\\d*");
     }
 }
