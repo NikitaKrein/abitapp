@@ -28,7 +28,7 @@ public class SubmitForFacultyButton implements Command {
             userService.updateUserRequest(id, formOfTraining, user.getId());
             HttpUtils.updateSession(req, "user", userService.findUserById(user.getId()));
         } catch (RuntimeException exception) {
-            throw new CommandException("message", exception);
+            throw new CommandException("Submit for faculty button failed ", exception);
         }
 
         return CommandName.PROFILE;

@@ -26,7 +26,7 @@ public class UniversityCatalog implements Command {
             List<University> universities = getCategoryList(req, Integer.parseInt(categoryId));
             req.setAttribute("universities", universities);
         } catch (RuntimeException exception) {
-            throw new CommandException("message", exception);
+            throw new CommandException("University catalog failed ", exception);
         }
         return CommandName.UNIVERSITY_CATALOG;
     }

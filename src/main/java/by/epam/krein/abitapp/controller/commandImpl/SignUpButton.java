@@ -41,7 +41,7 @@ public class SignUpButton implements Command {
             userService.signUp(user);
             HttpUtils.updateSession(req, "user", userService.findUserById(user.getId()));
         } catch (RuntimeException exception) {
-            throw new CommandException("Sign up failed", exception);
+            throw new CommandException("Sign up failed ", exception);
         }
         logger.info(user.getEmail() + " sign up");
         return CommandName.PROFILE;
