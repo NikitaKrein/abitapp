@@ -32,7 +32,7 @@ public class SignUpButton implements Command {
             return CommandName.ERROR.getCommand().callCommandMethod(req);
         }
         if(!PasswordValidator.validatePassword(req)){
-            logger.info("Failed, passwords didn't match.\nEmail: " + req.getParameter("email"));
+            logger.info("Failed signUp, passwords didn't match. (Email: " + req.getParameter("email") + ")");
             req.setAttribute("wrongInformation", true);
             return CommandName.SIGN_UP_BUTTON;
         }

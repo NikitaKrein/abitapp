@@ -1,7 +1,6 @@
 package by.epam.krein.abitapp.dao.impl;
 
 import by.epam.krein.abitapp.connectionPool.Connector;
-import by.epam.krein.abitapp.connection.ConnectionDB;
 import by.epam.krein.abitapp.dao.DAOFactory;
 import by.epam.krein.abitapp.dao.SpecialtyDAO;
 import by.epam.krein.abitapp.dao.UserDAO;

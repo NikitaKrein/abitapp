@@ -56,7 +56,7 @@ public class SQLAdminDAO implements AdminDAO {
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(CREATE_ADMIN);
             preparedStatement.setString(1, admin.getEmail());
-            preparedStatement.setString(2, admin.getPassword());
+            preparedStatement.setString(2, String.valueOf(admin.getPassword()));
             preparedStatement.setInt(3, admin.getUniversity().getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
@@ -107,7 +107,7 @@ public class SQLAdminDAO implements AdminDAO {
             Admin admin = new Admin();
             admin.setId(resultSet.getInt("id"));
             admin.setEmail(resultSet.getString("email"));
-            admin.setPassword(resultSet.getString("password"));
+            admin.setPassword(resultSet.getString("password").toCharArray());
             admin.setUniversity(sqlUniversityDAO.findUniversity(resultSet.getInt("adminLevel")));
             return admin;
         } catch (SQLException exception) {

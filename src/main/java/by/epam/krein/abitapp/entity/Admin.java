@@ -3,13 +3,13 @@ package by.epam.krein.abitapp.entity;
 public class Admin {
     private int id;
     private String email;
-    private String password;
+    private char[] password;
     private University university;
 
     public Admin() {
     }
 
-    public Admin(String email, String password, University university) {
+    public Admin(String email, char[] password, University university) {
         this.email = email;
         this.password = password;
         this.university = university;
@@ -31,11 +31,11 @@ public class Admin {
         this.email = email;
     }
 
-    public String getPassword() {
+    public char[] getPassword() {
         return password;
     }
 
-    public void setPassword(String password) {
+    public void setPassword(char[] password) {
         this.password = password;
     }
 

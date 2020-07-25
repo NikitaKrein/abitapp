@@ -6,7 +6,6 @@ import by.epam.krein.abitapp.exception.DAOException;
 import org.apache.commons.lang3.tuple.Pair;
 
 import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Map;
 
