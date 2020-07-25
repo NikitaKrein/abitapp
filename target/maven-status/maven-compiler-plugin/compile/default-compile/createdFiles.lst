@@ -33,12 +33,14 @@ by\epam\krein\abitapp\service\ServiceFactory.class
 by\epam\krein\abitapp\connection\ConnectionPool.class
 by\epam\krein\abitapp\controller\commandImpl\EditProfileButton.class
 by\epam\krein\abitapp\entity\Specialty.class
+by\epam\krein\abitapp\util\PasswordValidator.class
 by\epam\krein\abitapp\dao\impl\SQLSpecialtyDAO.class
 by\epam\krein\abitapp\controller\commandImpl\AdminRequests.class
 by\epam\krein\abitapp\controller\commandImpl\SignOutButton.class
 by\epam\krein\abitapp\controller\commandImpl\FacultyPage.class
 by\epam\krein\abitapp\dao\UniversityDAO.class
 by\epam\krein\abitapp\controller\commandImpl\AdminRequestsButton.class
+by\epam\krein\abitapp\controller\commandImpl\Error.class
 by\epam\krein\abitapp\controller\commandImpl\SignInButton.class
 by\epam\krein\abitapp\service\impl\AdminServiceImpl.class
 by\epam\krein\abitapp\connectionPool\ConnectionPool.class
@@ -63,4 +65,5 @@ by\epam\krein\abitapp\controller\commandImpl\SignUpButton.class
 by\epam\krein\abitapp\entity\University.class
 by\epam\krein\abitapp\controller\commandImpl\EditAdminInformationButton.class
 by\epam\krein\abitapp\filter\AdminSpecialtyEditFilter.class
+by\epam\krein\abitapp\util\HttpUtils.class
 by\epam\krein\abitapp\controller\commandImpl\AdminCreateUniversityButton.class

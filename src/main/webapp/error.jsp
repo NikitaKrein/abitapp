@@ -13,8 +13,8 @@
     <title><fmt:message key="label.error"/></title>
     <meta charset="utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no"/>
-    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/assets/css/main.css"/>
-
+<%--    <link rel="stylesheet" href="${pageContext.request.contextPath}/view/assets/css/main.css"/>--%>
+    <style><%@include file="view/assets/css/main.css"%></style>
     <style>
         a {
             text-decoration: none; /* Отменяем подчеркивание у ссылки */

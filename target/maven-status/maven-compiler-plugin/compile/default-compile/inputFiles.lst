@@ -25,9 +25,11 @@ D:\abitapp\src\main\java\by\epam\krein\abitapp\entity\User.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\filter\LoginFilter.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\service\impl\SpecialtyServiceImpl.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\service\impl\UserServiceImpl.java
+D:\abitapp\src\main\java\by\epam\krein\abitapp\util\PasswordValidator.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\EditAdminSpecialtyInformation.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\FacultyPage.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\UniversityCatalog.java
+D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\Error.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\AdminFacultyRating.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\AdminRequests.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\SignUpButton.java
@@ -49,6 +51,7 @@ D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\Command.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\CommandProvider.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\service\impl\SecurityServiceImpl.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\connectionPool\Connector.java
+D:\abitapp\src\main\java\by\epam\krein\abitapp\util\HttpUtils.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\connection\ConnectionPool.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\dao\impl\SQLAdminDAO.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\dao\impl\SQLSpecialtyDAO.java
