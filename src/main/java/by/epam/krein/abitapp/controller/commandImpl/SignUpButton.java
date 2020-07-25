@@ -10,12 +10,16 @@ import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UserService;
 import by.epam.krein.abitapp.util.HttpUtils;
 import by.epam.krein.abitapp.util.PasswordValidator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
 import java.util.Map;
 
 public class SignUpButton implements Command {
+
+    private final Logger logger = LoggerFactory.getLogger(SignUpButton.class);
 
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     UserService userService = serviceFactory.getUserService();
@@ -24,9 +28,11 @@ public class SignUpButton implements Command {
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
         if (HttpUtils.isMethodGet(req)) {
+            logger.info("Failed, call method get in signUp page.");
             return CommandName.ERROR.getCommand().callCommandMethod(req);
         }
         if(!PasswordValidator.validatePassword(req)){
+            logger.info("Failed, passwords didn't match.\nEmail: " + req.getParameter("email"));
             req.setAttribute("wrongInformation", true);
             return CommandName.SIGN_UP_BUTTON;
         }
@@ -35,8 +41,9 @@ public class SignUpButton implements Command {
             userService.signUp(user);
             HttpUtils.updateSession(req, "user", userService.findUserById(user.getId()));
         } catch (RuntimeException exception) {
-            throw new CommandException("message", exception);
+            throw new CommandException("Sign up failed", exception);
         }
+        logger.info(user.getEmail() + " sign up");
         return CommandName.PROFILE;
     }
 
