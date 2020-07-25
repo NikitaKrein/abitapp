@@ -15,7 +15,6 @@ public class Error implements Command {
 
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) throws CommandException {
-        logger.error("Failed, page " + req.getRequestURL() + " doesn't exist ");
         return CommandName.ERROR;
     }
 }

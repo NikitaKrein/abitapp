@@ -51,6 +51,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <div class="container">
             <div class="row">
                 <div class="col-12">
+                    <c:if test="${requestScope.wrongInformation}">
+                        <h1>BAD PASSWORD</h1>
+                    </c:if>
                     <form method="post" action="${pageContext.request.contextPath}/signUpButton">
                         <section>
                             <header class="major">
@@ -68,6 +71,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                 </label>
                                 <label>
                                     <input type="password" required placeholder="<fmt:message key="label.password"/>" name="password">
+                                </label>
+                                <label>
+                                    <input type="password" required placeholder="<fmt:message key="label.repeatPassword"/>" name="repeatPassword">
                                 </label>
                                 <label>
                                     <select name="certificate">

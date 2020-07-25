@@ -37,7 +37,7 @@ public class SignInButtonTests {
 
        // when(user.getPassword()).thenReturn(PASSWORD);
         when(request.getSession()).thenReturn(httpSession);
-        Assertions.assertEquals(CommandName.PROFILE, signInButton.callCommandMethod(request, response));
+        Assertions.assertEquals(CommandName.PROFILE, signInButton.callCommandMethod(request));
         verify(httpSession, times(1)).setAttribute(eq("user"), eq(user));
     }
 
@@ -57,7 +57,7 @@ public class SignInButtonTests {
 
        // when(user.getPassword()).thenReturn("wrongPassword");
         when(request.getSession()).thenReturn(httpSession);
-        Assertions.assertEquals(CommandName.SIGN_IN_BUTTON, signInButton.callCommandMethod(request, response));
+        Assertions.assertEquals(CommandName.SIGN_IN_BUTTON, signInButton.callCommandMethod(request));
         verify(httpSession, never()).setAttribute(eq("user"), eq(user));
     }
 
@@ -77,7 +77,7 @@ public class SignInButtonTests {
 
         //when(user.getPassword()).thenReturn("wrongPassword");
         when(request.getSession()).thenReturn(httpSession);
-        Assertions.assertEquals(CommandName.SIGN_IN_BUTTON, signInButton.callCommandMethod(request, response));
+        Assertions.assertEquals(CommandName.SIGN_IN_BUTTON, signInButton.callCommandMethod(request));
         verify(httpSession, never()).setAttribute(eq("user"), eq(user));
     }
 
