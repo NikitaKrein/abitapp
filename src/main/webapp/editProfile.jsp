@@ -1,4 +1,3 @@
-<%@ page import="by.epam.krein.abitapp.entity.Exam" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
@@ -69,58 +68,15 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                             </header>
                             <div>
                                 <label>
-                                    <input type="text" placeholder="${sessionScope.user.surname}" name="surname">
-                                </label>
-                                <label>
-                                    <input type="text" placeholder="${sessionScope.user.name}" name="name">
-                                </label>
-                                <label>
                                     <input type="text" placeholder="${sessionScope.user.email}" name="email">
                                 </label>
                                 <label>
-                                    <input type="password" placeholder="*" name="password">
+                                    <input type="password" placeholder="*" name="password" minlength="6">
                                 </label>
                                 <label>
-                                    <select name="certificate">
-                                        <option value="${exam}" disabled selected >Certificate
-                                        </option>
-                                        <c:set var="exams" value="<%=Exam.values()%>"/>
-                                        <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}"><fmt:message key="label.${exam}"/></option>
-                                        </c:forEach>
-                                        <input type="number" placeholder="Mark" name="firstMark" class="form-control" min="1" max="100">
-                                    </select>
+                                    <input type="password" placeholder="<fmt:message key="label.repeatPassword"/>" name="repeatPassword">
                                 </label>
-                                <label>
-                                    <select name="firstExam">
-                                        <option value="" disabled selected>First Subject</option>
-                                        <c:set var="exams" value="<%=Exam.values()%>" />
-                                        <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}">${exam}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="number" placeholder="Mark" name="firstMark" class="form-control" min="1" max="100">
-                                </label>
-                                <label>
-                                    <select name="secondExam">
-                                        <option value="" disabled selected>First Subject</option>
-                                        <c:set var="exams" value="<%=Exam.values()%>" />
-                                        <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}">${exam}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="number" placeholder="Mark" name="secondMark" class="form-control" min="1" max="100">
-                                </label>
-                                <label>
-                                    <select name="thirdExam">
-                                        <option value="" disabled selected>First Subject</option>
-                                        <c:set var="exams" value="<%=Exam.values()%>" />
-                                        <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}">${exam}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="number" placeholder="Mark" name="thirdMark" class="form-control" min="1" max="100">
-                                </label>
+
                                 <button class="button">
                                     <fmt:message key="label.edit"/>
                                 </button>
