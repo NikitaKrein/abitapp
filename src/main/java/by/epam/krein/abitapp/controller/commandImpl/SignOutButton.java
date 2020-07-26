@@ -21,7 +21,7 @@ public class SignOutButton implements Command {
             signOutAdmin(req);
         }
         req.getSession().invalidate();
-        return CommandName.MAIN_PAGE;
+        return CommandName.SIGN_OUT_BUTTON;
     }
 
     private void signOutUser(HttpServletRequest req){

@@ -25,8 +25,8 @@ public enum  CommandName {
     EDIT_PROFILE("/editProfile.jsp", new Profile()),
     FACULTY_PAGE("/faculty.jsp", new FacultyPage()),
     LANGUAGE_BUTTON("/", new LanguageButton()),
-    ERROR("/error", new Error()),
-    MAIN_PAGE("/", new MainPage());
+    ERROR("/error", new Error());
+    //MAIN_PAGE("/", new MainPage());
 
 
     private final String jspAddress;

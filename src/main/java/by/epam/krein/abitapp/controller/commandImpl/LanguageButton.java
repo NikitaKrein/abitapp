@@ -9,6 +9,6 @@ public class LanguageButton implements Command {
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
 
-        return CommandName.MAIN_PAGE;
+        return CommandName.LANGUAGE_BUTTON;
     }
 }

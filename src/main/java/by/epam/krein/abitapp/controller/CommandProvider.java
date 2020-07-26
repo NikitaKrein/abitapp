@@ -14,7 +14,7 @@ public final class CommandProvider {
         repository.put(CommandName.SIGN_IN_BUTTON, new SignInButton());
         repository.put(CommandName.SIGN_UP_BUTTON, new SignUpButton());
         repository.put(CommandName.PROFILE, new Profile());
-        repository.put(CommandName.MAIN_PAGE, new MainPage());
+        //repository.put(CommandName.MAIN_PAGE, new MainPage());
         repository.put(CommandName.SIGN_OUT_BUTTON, new SignOutButton());
         repository.put(CommandName.UNIVERSITY_CATALOG, new UniversityCatalog());
         repository.put(CommandName.FACULTY_PAGE, new FacultyPage());
@@ -24,16 +24,16 @@ public final class CommandProvider {
         repository.put(CommandName.EDIT_ADMIN_INFORMATION_BUTTON, new EditAdminInformationButton());
     }
 
-    public Command getCommand(String name){
-        Command command = null;
-        try {
-            command = repository.get(CommandName.valueOf(name.toUpperCase()));
-        }
-        catch (IllegalArgumentException | NullPointerException e){
-            command = repository.get(CommandName.MAIN_PAGE);//тут сделать все плохо
-        }
-        return command;
-
-    }
+//    public Command getCommand(String name){
+//        Command command = null;
+//        try {
+//            command = repository.get(CommandName.valueOf(name.toUpperCase()));
+//        }
+//        catch (IllegalArgumentException | NullPointerException e){
+//            command = repository.get(CommandName.MAIN_PAGE);//тут сделать все плохо
+//        }
+//        return command;
+//
+//    }
 
 }
