@@ -15,7 +15,7 @@ public class runner {
     public static final int START = END - 100;
 
     public static void main(String[] args) throws SQLException {
-        String password = "hash";
+        String password = "111";
         String script = BCrypt.withDefaults().hashToString(12,password.toCharArray());
         System.out.println(script);
 //        BCrypt.Result result = BCrypt.verifyer().verify(password.toCharArray(), script);

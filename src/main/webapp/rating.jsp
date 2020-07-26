@@ -111,19 +111,19 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                 <th>${sessionScope.user.name} ${sessionScope.user.surname}</th>
                                 <th>${sessionScope.user.specialty.name}(${sessionScope.user.specialty.university.name})</th>
                                 <th><fmt:message key="label.formOfTraining${sessionScope.user.formOfTraining}"/></th>
-                                <th><fmt:message key="label.examMark"/>: ${requestScope.sumOfMarks}</th>
+                                <th><fmt:message key="label.examMark"/>: ${requestScope.userExamScore}</th>
                                 <th><fmt:message key="label.rating"/>: ${requestScope.userRating}</th>
                             </tr>
                         </table>
                     </section>
                     <button><fmt:message key="label.specialties"/></button>
-                    <c:forEach var="specialtyRequests" items="${requestScope.specialties}" varStatus="firstId">
+                    <c:forEach var="specialty" items="${requestScope.specialties}" varStatus="firstId">
                         <section id="intro" class="container">
                             <div>
                                 <input type="checkbox" class="read-more-state" id="post${firstId.index}"/>
                                 <header class="major">
                                     <label for="post${firstId.index}" class="read-more-trigger">
-                                        <h2>${specialtyRequests.name}</h2>
+                                        <h2>${specialty.name}</h2>
                                     </label>
                                 </header>
                                 <div class="read-more-wrap">
