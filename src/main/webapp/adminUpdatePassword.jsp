@@ -63,7 +63,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <div class="container">
             <div class="row">
                 <div class="col-12">
-                    <form method="post" action="${pageContext.request.contextPath}/adminUpdatePasswordButton?id=${sessionScope.admin.id}" accept-charset="UTF-8">
+                    <form method="post" action="${pageContext.request.contextPath}/adminUpdatePasswordButton" accept-charset="UTF-8">
                         <section>
                             <header class="major">
                                 <h2><fmt:message key="label.updatePassword"/> </h2>

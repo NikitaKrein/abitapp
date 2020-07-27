@@ -35,11 +35,11 @@ public class SQLAdminDAO implements AdminDAO {
 
 
     @Override
-    public void updatePassword(int id, String password) throws DAOException {
+    public void updatePassword(int id, char[] password) throws DAOException {
         Connection connection = Connector.getConnection();
         try {
             PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_ADMIN_PASSWORD);
-            preparedStatement.setString(1, password);
+            preparedStatement.setString(1, String.valueOf(password));
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {

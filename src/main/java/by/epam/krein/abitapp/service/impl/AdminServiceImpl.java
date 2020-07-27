@@ -16,7 +16,7 @@ public class AdminServiceImpl implements AdminService {
     AdminDAO adminDAO = daoFactory.getAdminDAO();
 
     @Override
-    public void updatePassword(int id, String password) throws ServiceException{
+    public void updatePassword(int id, char[] password) throws ServiceException{
         try {
             adminDAO.updatePassword(id, password);
         } catch (DAOException daoException) {

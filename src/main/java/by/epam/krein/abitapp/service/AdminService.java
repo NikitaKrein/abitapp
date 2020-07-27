@@ -6,6 +6,6 @@ import by.epam.krein.abitapp.exception.ServiceException;
 import java.sql.SQLException;
 
 public interface AdminService {
-    public void updatePassword(int id, String password) throws ServiceException;
+    public void updatePassword(int id, char[] password) throws ServiceException;
     public Admin findByEmail(String email) throws ServiceException;
 }
