@@ -8,6 +8,7 @@ import by.epam.krein.abitapp.entity.User;
 import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.*;
 import by.epam.krein.abitapp.util.HttpUtils;
+import by.epam.krein.abitapp.util.UniversityUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,12 +22,8 @@ public class SignInButton implements Command {
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     UserService userService = serviceFactory.getUserService();
     AdminService adminService = serviceFactory.getAdminService();
-    SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
     SecurityService securityService = serviceFactory.getSecurityService();
 
-//    private UserService userService = new UserServiceImpl(); // fabrika potom
-//    private final AdminService adminService = new AdminServiceImpl();
-//    private final SpecialtyService facultyService = new SpecialtyServiceImpl();
 
     public void setUserService(UserService userService) {
         this.userService = userService;
@@ -73,15 +70,10 @@ public class SignInButton implements Command {
         if (admin != null && securityService.equalsPassword(password, admin.getPassword())) {
             HttpUtils.updateSession(req, "admin", admin);
             if (admin.getUniversity().isFaculty()) {
-                setSpecialities(req, admin.getUniversity().getId());
+                UniversityUtils.setSpecialities(req, admin.getUniversity().getId());
             }
             return true;
         }
         return false;
-    }
-
-    private void setSpecialities(HttpServletRequest req, int facultyId) {
-        List<Specialty> specialties = specialtyService.findSpecialtiesByFacultyId(facultyId);
-        HttpUtils.updateSession(req, "specialties", specialties);
     }
 }
