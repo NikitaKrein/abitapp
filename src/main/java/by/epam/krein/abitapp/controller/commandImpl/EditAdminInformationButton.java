@@ -36,14 +36,15 @@ public class EditAdminInformationButton implements Command {
         Admin admin = (Admin) req.getSession().getAttribute("admin");
         try {
             editInformation(req);
-        } catch(RuntimeException exception){
+            admin = adminService.findByEmail(admin.getEmail());
+            if (admin.getUniversity().isFaculty()) {
+                UniversityUtils.setSpecialities(req, admin.getUniversity().getId());
+            }
+        } catch (RuntimeException exception) {
             throw new CommandException("Edit university/faculty information failed", exception);
         }
-        admin = adminService.findByEmail(admin.getEmail());
+
         HttpUtils.updateSession(req, "admin", admin);
-        if (admin.getUniversity().isFaculty()) {
-            UniversityUtils.setSpecialities(req, admin.getUniversity().getId());
-        }
         return CommandName.EDIT_ADMIN_INFORMATION_BUTTON;
     }
 
@@ -65,7 +66,7 @@ public class EditAdminInformationButton implements Command {
         specialtyService.updateSpecialty(id, name, information, admissionPlanForFree, admissionPlanForPaid, admissionPlanForCorrespondenceCourseForFree, admissionPlanForCorrespondenceCourseForPaid);
     }
 
-    private void editInformation(HttpServletRequest req){
+    private void editInformation(HttpServletRequest req) {
         if (req.getParameter("button").equals("university")) {
             editUniversityInformation(req);
         }
