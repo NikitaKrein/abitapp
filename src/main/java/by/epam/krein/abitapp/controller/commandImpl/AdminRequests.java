@@ -23,14 +23,13 @@ public class AdminRequests implements Command {
     public CommandName callCommandMethod(HttpServletRequest req) {
         Admin admin = (Admin) req.getSession().getAttribute("admin");
         List<Specialty> specialties = (List<Specialty>) req.getSession().getAttribute("specialties");
-        
+        List<List<Pair<User, Integer>>> usersWithRequests;
         try {
-            List<List<Pair<User, Integer>>> usersWithRequests = getSpecialtiesWithRequests(specialties);
-            req.setAttribute("usersWithRequests", usersWithRequests);
+            usersWithRequests = getSpecialtiesWithRequests(specialties);
         } catch (RuntimeException exception) {
             throw new CommandException("Admin requests failed ", exception);
         }
-
+        req.setAttribute("usersWithRequests", usersWithRequests);
         return CommandName.ADMIN_REQUESTS;
     }
 

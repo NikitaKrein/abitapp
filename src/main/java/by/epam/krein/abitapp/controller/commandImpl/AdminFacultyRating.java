@@ -19,24 +19,32 @@ import java.util.List;
 public class AdminFacultyRating implements Command {
 
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
-    UniversityService universityService = serviceFactory.getUniversityService();
     SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
 
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
         Admin admin = (Admin) req.getSession().getAttribute("admin");
-        List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> rating = new ArrayList<>();
+
+        List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> rating;
         List<Specialty> specialties = (List<Specialty>) req.getSession().getAttribute("specialties");
+        
         try {
-            for (Specialty specialty : specialties){
-                for (int i = 1; i < 5; i++){
-                    rating.add(Pair.of(specialty.getId(), Pair.of(i, specialtyService.getSpecialtyRating(specialty.getId(), i))));
-                }
-            }
-        } catch(RuntimeException exception){
-            throw new CommandException("message", exception);
+            rating = getFacultyRating(specialties);
+        } catch (RuntimeException exception) {
+            throw new CommandException("Admin faculty rating failed ", exception);
         }
+
         req.setAttribute("rating", rating);
         return CommandName.ADMIN_RATING;
+    }
+
+    private List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> getFacultyRating(List<Specialty> specialties) {
+        List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> rating = new ArrayList<>();
+        for (Specialty specialty : specialties) {
+            for (int i = 1; i < 5; i++) {
+                rating.add(Pair.of(specialty.getId(), Pair.of(i, specialtyService.getSpecialtyRating(specialty.getId(), i))));
+            }
+        }
+        return rating;
     }
 }
