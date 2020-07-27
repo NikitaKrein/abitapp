@@ -13,7 +13,7 @@ public enum  CommandName {
     ADMIN_EDIT_SPECIALTY_EXAM_BUTTON("/admin/profile", new AdminUpdateSpecialtyExamsButton()),
     ADMIN_UPDATE_PASSWORD_BUTTON("/admin/profile", new AdminUpdatePasswordButton()),
     ADMIN_REQUESTS_BUTTON("/admin/requests", new AdminRequestsButton()),
-    EDIT_ADMIN_INFORMATION("/adminEditInformation.jsp", new EditAdminInformation()),
+    //EDIT_ADMIN_INFORMATION("/adminEditInformation.jsp", new EditAdminInformation()),
     EDIT_ADMIN_SPECIALTY_INFORMATION("/adminEditSpecialty.jsp", new EditAdminSpecialtyInformation()),
     ADMIN_REQUESTS("/adminRequests.jsp", new AdminRequests()),
     ADMIN_RATING("/adminFacultyRating.jsp", new AdminFacultyRating()),
