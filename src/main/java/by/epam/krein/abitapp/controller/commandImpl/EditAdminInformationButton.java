@@ -12,11 +12,15 @@ import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UniversityService;
 import by.epam.krein.abitapp.util.HttpUtils;
 import by.epam.krein.abitapp.util.UniversityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class EditAdminInformationButton implements Command {
+
+    private final Logger logger = LoggerFactory.getLogger(EditAdminInformationButton.class);
 
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     AdminService adminService = serviceFactory.getAdminService();
@@ -25,14 +29,16 @@ public class EditAdminInformationButton implements Command {
 
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
+        if (HttpUtils.isMethodGet(req)) {
+            logger.info("Failed, call method get in editAdminInformation page.");
+            return CommandName.ERROR.getCommand().callCommandMethod(req);
+        }
         Admin admin = (Admin) req.getSession().getAttribute("admin");
-        if (req.getParameter("button").equals("university")) {
-            editUniversityInformation(req);
+        try {
+            editInformation(req);
+        } catch(RuntimeException exception){
+            throw new CommandException("Edit university/faculty information failed", exception);
         }
-        if (req.getParameter("button").equals("specialty")) {
-            editSpecialtyInformation(req);
-        }
-
         admin = adminService.findByEmail(admin.getEmail());
         HttpUtils.updateSession(req, "admin", admin);
         if (admin.getUniversity().isFaculty()) {
@@ -59,4 +65,12 @@ public class EditAdminInformationButton implements Command {
         specialtyService.updateSpecialty(id, name, information, admissionPlanForFree, admissionPlanForPaid, admissionPlanForCorrespondenceCourseForFree, admissionPlanForCorrespondenceCourseForPaid);
     }
 
+    private void editInformation(HttpServletRequest req){
+        if (req.getParameter("button").equals("university")) {
+            editUniversityInformation(req);
+        }
+        if (req.getParameter("button").equals("specialty")) {
+            editSpecialtyInformation(req);
+        }
+    }
 }
