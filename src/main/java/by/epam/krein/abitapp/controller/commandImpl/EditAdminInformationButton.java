@@ -53,6 +53,7 @@ public class EditAdminInformationButton implements Command {
         String name = req.getParameter("name");
         String information = req.getParameter("information");
         universityService.updateUniversity(name, information, id);
+        logger.info("Update " + name + " university information");
     }
 
     private void editSpecialtyInformation(HttpServletRequest req) {
@@ -64,6 +65,7 @@ public class EditAdminInformationButton implements Command {
         int admissionPlanForCorrespondenceCourseForFree = Integer.parseInt(req.getParameter("admissionPlanForCorrespondenceCourseForFree"));
         int admissionPlanForCorrespondenceCourseForPaid = Integer.parseInt(req.getParameter("admissionPlanForCorrespondenceCourseForPaid"));
         specialtyService.updateSpecialty(id, name, information, admissionPlanForFree, admissionPlanForPaid, admissionPlanForCorrespondenceCourseForFree, admissionPlanForCorrespondenceCourseForPaid);
+        logger.info("Update" + name + " specialty information");
     }
 
     private void editInformation(HttpServletRequest req) {

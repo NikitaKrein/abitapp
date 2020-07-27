@@ -8,6 +8,9 @@ import by.epam.krein.abitapp.entity.Specialty;
 import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
+import by.epam.krein.abitapp.util.UniversityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
@@ -15,80 +18,84 @@ import java.util.List;
 
 public class AdminUpdateSpecialtyExamsButton implements Command {
 
+    private final Logger logger = LoggerFactory.getLogger(AdminUpdateSpecialtyExamsButton.class);
+
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
-    //private final SpecialtyService facultyService = new SpecialtyServiceImpl(); // fabrika potom
+    private String exam = "";
+
+    public String getExam() {
+        return exam;
+    }
+
+    public void setExam(String exam) {
+        this.exam = exam;
+    }
 
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
-        int id = Integer.parseInt(req.getParameter("id"));
-        Admin admin = (Admin) req.getSession().getAttribute("admin");
-        Specialty specialty = null;
-        try {
-            specialty = specialtyService.findById(id);
-        } catch(RuntimeException exception){
-            throw new CommandException("message", exception);
+        String prepareId = req.getParameter("id");
+        if (UniversityUtils.checkId(prepareId)) { // Никогда не сработает, есть фильтр, хз, что лучше
+            logger.info("Failed, incorrect id");
+            return CommandName.ERROR.getCommand().callCommandMethod(req);
         }
+        int id = Integer.parseInt(prepareId);
 
-        List<Specialty> specialties = null;
-        String action  = req.getParameter("action");
-        String exam = null;
-        if (action.contains("delete")){
-            exam = action.substring(7);
-            action = "delete";
-        }
-        switch (action){
-            case "update":{
-                updateExams(req, specialty);
-                break;
-            }
-            case "delete":{
-                deleteExam(exam, req, specialty);
-                break;
-            }
-            case "add":{
-                addExam(req, specialty);
-                break;
-            }
-        }
+        Admin admin = (Admin) req.getSession().getAttribute("admin");
+
+        String action = req.getParameter("action");
+        action = deleteChecker(action);
+
         try {
-            specialties = specialtyService.findSpecialtiesByFacultyId(admin.getUniversity().getId());
-        } catch(RuntimeException exception){
-            throw new CommandException("message", exception);
+            switch (action) {
+                case "update": {
+                    updateExams(req, specialtyService.findById(id));
+                    break;
+                }
+                case "delete": {
+                    deleteExam(exam, req, specialtyService.findById(id));
+                    break;
+                }
+                case "add": {
+                    addExam(req, specialtyService.findById(id));
+                    break;
+                }
+            }
+            UniversityUtils.setSpecialities(req, admin.getUniversity().getId());
+        } catch (RuntimeException exception) {
+            throw new CommandException("AdminUpdateSpecialtyExamsButton failed ", exception);
         }
-        req.getSession().setAttribute("specialties", specialties);
         return CommandName.ADMIN_EDIT_SPECIALTY_EXAM_BUTTON;
     }
 
-    private void updateExams(HttpServletRequest req, Specialty specialty){
+    private void updateExams(HttpServletRequest req, Specialty specialty) {
         List<Exam> nameOfExams = new ArrayList<>();
-        for(Exam exam : specialty.getNameOfExams()){
+        for (Exam exam : specialty.getNameOfExams()) {
             Exam newExam = Exam.valueOf(req.getParameter("Exam" + exam));
-            if(exam != newExam){
-                try {
-                    specialtyService.updateSpecialtyExam(specialty.getId(), exam.toString(), newExam.toString());
-                } catch(RuntimeException exception){
-                    throw new CommandException("message", exception);
-                }
+            if (exam != newExam) {
+                specialtyService.updateSpecialtyExam(specialty.getId(), exam.toString(), newExam.toString());
+                logger.info("Replace " +  exam + " with " + newExam);
             }
         }
     }
 
-    private void deleteExam(String exam, HttpServletRequest req, Specialty specialty){
-        try {
-            specialtyService.deleteSpecialtyExam(specialty.getId(), exam);
-        } catch(RuntimeException exception){
-            throw new CommandException("message", exception);
-        }
+    private void deleteExam(String exam, HttpServletRequest req, Specialty specialty) {
+        specialtyService.deleteSpecialtyExam(specialty.getId(), getExam());
+        logger.info("Delete in " + specialty.getName()  + " " + getExam() + " exam.");
     }
 
-    private void addExam(HttpServletRequest req, Specialty specialty){
+    private void addExam(HttpServletRequest req, Specialty specialty) {
         String newExam = req.getParameter("newExam");
-        try {
-            specialtyService.createSpecialtyExam(specialty.getId(), newExam);
-        } catch(RuntimeException exception){
-            throw new CommandException("message", exception);
+        specialtyService.createSpecialtyExam(specialty.getId(), newExam);
+        logger.info("Add in " + specialty.getName() +  " " + getExam() + " exam.");
+    }
+
+    private String deleteChecker(String action) {
+        if (action.contains("delete")) {
+            setExam(action.substring(7));
+            return "delete";
         }
+        return action;
     }
 
 }
