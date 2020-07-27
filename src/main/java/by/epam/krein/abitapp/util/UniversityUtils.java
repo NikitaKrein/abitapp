@@ -39,4 +39,9 @@ public class UniversityUtils {
     public static boolean checkId(String prepareCategoryId){
         return !prepareCategoryId.toString().matches("\\d*");
     }
+
+    public static void setSpecialities(HttpServletRequest req, int facultyId) {
+        List<Specialty> specialties = specialtyService.findSpecialtiesByFacultyId(facultyId);
+        HttpUtils.updateSession(req, "specialties", specialties);
+    }
 }
