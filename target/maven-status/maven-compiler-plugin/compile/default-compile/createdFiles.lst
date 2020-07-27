@@ -3,14 +3,12 @@ by\epam\krein\abitapp\filter\UserSessionFilter.class
 by\epam\krein\abitapp\entity\Exam.class
 by\epam\krein\abitapp\dao\impl\SQLUserDAO.class
 by\epam\krein\abitapp\controller\commandImpl\AdminFacultyRating.class
-by\epam\krein\abitapp\controller\commandImpl\EditAdminInformation.class
 by\epam\krein\abitapp\controller\commandImpl\UniversityCatalog.class
 by\epam\krein\abitapp\filter\AdminSessionFilter.class
 by\epam\krein\abitapp\connectionPool\DataPropertiesForConnectFactory.class
 by\epam\krein\abitapp\controller\commandImpl\SubmitForFacultyButton.class
 by\epam\krein\abitapp\service\impl\SecurityServiceImpl.class
 by\epam\krein\abitapp\controller\CommandName.class
-by\epam\krein\abitapp\controller\commandImpl\MainPage.class
 by\epam\krein\abitapp\service\impl\UniversityServiceImpl.class
 by\epam\krein\abitapp\controller\commandImpl\AdminUpdatePasswordButton.class
 by\epam\krein\abitapp\dao\impl\SQLAdminDAO.class
@@ -42,6 +40,7 @@ by\epam\krein\abitapp\dao\UniversityDAO.class
 by\epam\krein\abitapp\controller\commandImpl\AdminRequestsButton.class
 by\epam\krein\abitapp\controller\commandImpl\Error.class
 by\epam\krein\abitapp\controller\commandImpl\SignInButton.class
+by\epam\krein\abitapp\util\UniversityUtils.class
 by\epam\krein\abitapp\service\impl\AdminServiceImpl.class
 by\epam\krein\abitapp\connectionPool\ConnectionPool.class
 by\epam\krein\abitapp\controller\commandImpl\Profile.class

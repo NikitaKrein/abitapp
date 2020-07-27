@@ -12,15 +12,14 @@ D:\abitapp\src\main\java\by\epam\krein\abitapp\service\AdminService.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\FacultyRating.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\ControllerServlet.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\exception\CommandException.java
+D:\abitapp\src\main\java\by\epam\krein\abitapp\util\UniversityUtils.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\AdminRequestsButton.java
-D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\MainPage.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\Profile.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\connectionPool\BasicConnectionPool.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\service\SpecialtyService.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\connection\ConnectionDB.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\dao\impl\SQLUserDAO.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\filter\UserSessionFilter.java
-D:\abitapp\src\main\java\by\epam\krein\abitapp\controller\commandImpl\EditAdminInformation.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\entity\User.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\filter\LoginFilter.java
 D:\abitapp\src\main\java\by\epam\krein\abitapp\service\impl\SpecialtyServiceImpl.java
