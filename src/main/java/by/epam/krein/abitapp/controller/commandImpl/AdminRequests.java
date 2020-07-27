@@ -19,25 +19,29 @@ public class AdminRequests implements Command {
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     SpecialtyService specialtyService = serviceFactory.getSpecialtyService();
 
-    //private final SpecialtyService facultyService = new SpecialtyServiceImpl(); // fabrika potom
-
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
         Admin admin = (Admin) req.getSession().getAttribute("admin");
         List<Specialty> specialties = (List<Specialty>) req.getSession().getAttribute("specialties");
-        List<Pair<User, Integer> > specialtyUsersWithRequests = null;
-        List<List<Pair<User, Integer> > > usersWithRequests = new ArrayList<>();
-        for(Specialty specialty : specialties){
-            try {
-                specialtyUsersWithRequests = specialtyService.findUsersWithRequest(specialty.getId());
-                usersWithRequests.add(specialtyUsersWithRequests);
-            } catch(RuntimeException exception){
-                throw new CommandException("message", exception);
-            }
+        
+        try {
+            List<List<Pair<User, Integer>>> usersWithRequests = getSpecialtiesWithRequests(specialties);
+            req.setAttribute("usersWithRequests", usersWithRequests);
+        } catch (RuntimeException exception) {
+            throw new CommandException("Admin requests failed ", exception);
         }
 
-        req.setAttribute("usersWithRequests", usersWithRequests);
         return CommandName.ADMIN_REQUESTS;
     }
 
+
+    private List<List<Pair<User, Integer>>> getSpecialtiesWithRequests(List<Specialty> specialties) {
+        List<List<Pair<User, Integer>>> specialtiesWithRequests = new ArrayList<>();
+        List<Pair<User, Integer>> specialtyUsersWithRequests;
+        for (Specialty specialty : specialties) {
+            specialtyUsersWithRequests = specialtyService.findUsersWithRequest(specialty.getId());
+            specialtiesWithRequests.add(specialtyUsersWithRequests);
+        }
+        return specialtiesWithRequests;
+    }
 }
