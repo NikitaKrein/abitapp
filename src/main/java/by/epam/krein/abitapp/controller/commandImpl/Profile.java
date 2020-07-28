@@ -26,15 +26,11 @@ public class Profile implements Command {
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
 
-        User user = null;
+        User user;
         try {
             user = getUpdatedUser(req);
         } catch (RuntimeException exception) {
             throw new CommandException("Get updated user failed ", exception);
-        }
-
-        if (req.getPathInfo() == null) {
-            return CommandName.PROFILE;
         }
 
         switch (req.getPathInfo()) {
@@ -45,8 +41,8 @@ public class Profile implements Command {
                 return CommandName.REQUESTS;
             }
             case ("/rating"): {
-                List<Specialty> specialties = null;
-                List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> rating = null;
+                List<Specialty> specialties;
+                List<Pair<Integer, Pair<Integer, List<Pair<User, Integer>>>>> rating;
 
                 try {
                     specialties = specialtyService.findSpecialtiesByFacultyId(user.getSpecialty().getUniversity().getId());
