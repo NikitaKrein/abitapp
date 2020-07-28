@@ -14,6 +14,11 @@ public class SignOutButton implements Command {
 
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) {
+        signOut(req);
+        return CommandName.SIGN_OUT_BUTTON;
+    }
+
+    private void signOut(HttpServletRequest req){
         if(req.getSession().getAttribute("user") != null){
             signOutUser(req);
         }
@@ -21,7 +26,6 @@ public class SignOutButton implements Command {
             signOutAdmin(req);
         }
         req.getSession().invalidate();
-        return CommandName.SIGN_OUT_BUTTON;
     }
 
     private void signOutUser(HttpServletRequest req){
