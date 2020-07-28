@@ -30,30 +30,19 @@ public class SQLUserDAO implements UserDAO {
      * SQL queries
      */
 
-    private static final String FIND_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ?";
-    private static final String FIND_USER_EXAM_MARK = "SELECT * FROM user_exam_mark WHERE user_id = ?";
     private static final String CREATE_USER = "INSERT INTO user (name, surname, email, password) VALUES(?, ?, ?, ?)";
     private static final String CREATE_USER_EXAM_MARK = "INSERT INTO user_exam_mark (user_id, examName, mark) VALUES(?, ?, ?)";
-    private static final String UPDATE_USER_REQUEST = "UPDATE user SET request_specialty_id = ?, specialty_id = null, formOfTraining=?, adminMessage=null WHERE id = ?";
-
-    private static final String UPDATE_USER = "UPDATE user SET name = ?, surname = ?, email = ?, password = ?, request_faculty_id = ?, faculty_id = ?, formOfTraining=?, adminMessage=?  WHERE id = ?";
-    private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
-
-    private static final String FIND_USER_BY_EMAIL_PASSWORD = "SELECT * FROM user WHERE user.email = ? AND user.password = ?";
-
+    private static final String FIND_USER_BY_EMAIL = "SELECT * FROM user WHERE email = ?";
+    private static final String FIND_USER_EXAM_MARK = "SELECT * FROM user_exam_mark WHERE user_id = ?";
     private static final String FIND_ALL = "SELECT * FROM user";
     private static final String FIND_USER_BY_ID = "SELECT * FROM user WHERE id = ?";
-    private static final String DELETE_VIEW_WITH_SUM_MARK = "DROP VIEW userMark";
-    private static final String CREATE_VIEW_WITH_SUM_MARK = "CREATE VIEW userMark as SELECT user_id, SUM(user_exam_mark.mark) as sumMark FROM user_exam_mark INNER JOIN faculty_exam ON faculty_exam.examName = user_exam_mark.examName AND faculty_id = ? GROUP BY user_id";
-    private static final String FIND_RATING_APPROVED = "SELECT COUNT(*) FROM userMark INNER JOIN user ON user_id=user.id AND faculty_id=? AND formOfTraining = ? WHERE sumMark > ?";
-    private static final String FIND_RATING_ALL = "SELECT COUNT(*) FROM userMark INNER JOIN user ON user_id=user.id AND (faculty_id=? OR request_faculty_id = ?) AND formOfTraining = ? WHERE sumMark > ?";
-    private static final String COUNT_WITH_SAME_RATING_APPROVED = "SELECT COUNT(*) FROM userMark INNER JOIN user ON user_id=user.id AND faculty_id=? AND formOfTraining = ? WHERE sumMark = ?";
-    private static final String COUNT_WITH_SAME_RATING_ALL = "SELECT COUNT(*) FROM userMark INNER JOIN user ON user_id=user.id AND (faculty_id=? OR request_faculty_id = ?) AND formOfTraining = ? WHERE sumMark = ?";
-    private static final String SORT_RATING = "SELECT * FROM userMark INNER JOIN user ON user_id=user.id AND (faculty_id=? OR request_faculty_id = ?) AND formOfTraining = ? WHERE sumMark = ?";
-    private static final String FIND_USER_SUM_MARK = "SELECT * FROM userMark WHERE user_id = ?";
+    private static final String FIND_USER_SCORE = "SELECT * FROM user_exam_mark WHERE user_id = ?";
+
+    private static final String UPDATE_USER_REQUEST = "UPDATE user SET request_specialty_id = ?, specialty_id = null, formOfTraining=?, adminMessage=null WHERE id = ?";
+    private static final String UPDATE_USER = "UPDATE user SET name = ?, surname = ?, email = ?, password = ?, request_faculty_id = ?, faculty_id = ?, formOfTraining=?, adminMessage=?  WHERE id = ?";
+    private static final String DELETE_USER = "DELETE FROM user WHERE id = ?";
     private static final String ACCEPT_UPDATE_USER_SPECIALTY = "UPDATE user SET request_specialty_id = null, specialty_id = ? WHERE id = ?";
     private static final String REJECT_UPDATE_USER_SPECIALTY = "UPDATE user SET adminMessage = ? WHERE id = ?";
-    private static final String FIND_USER_SCORE = "SELECT * FROM user_exam_mark WHERE user_id = ?";
 
 
     @Override
@@ -73,21 +62,6 @@ public class SQLUserDAO implements UserDAO {
             Connector.releaseConnection(connection);
         }
     }
-
-//    @Override
-//    public User findUserByEmail(String email) throws DAOException {
-//        try (Connection connection = Connector.getConnection();
-//             PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_BY_EMAIL)) {
-//            preparedStatement.setString(1, email);
-//            ResultSet resultSet = preparedStatement.executeQuery();
-//            if (resultSet.next()) {
-//                return setUser(resultSet);
-//            }
-//            return null;
-//        } catch (SQLException exception) {
-//            throw new DAOException("message", exception);
-//        }
-//    }
 
     @Override
     public User setUser(ResultSet resultSet) throws DAOException {
@@ -272,138 +246,6 @@ public class SQLUserDAO implements UserDAO {
             Connector.releaseConnection(connection);
         }
     }
-
-
-    public SQLUserDAO() {
-    }
-
-    public void deleteView() throws DAOException {
-        Connection connection = Connector.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(DELETE_VIEW_WITH_SUM_MARK);
-            preparedStatement.executeUpdate();
-        } catch (SQLException exception) {
-            throw new DAOException("message", exception);
-        } finally {
-            Connector.releaseConnection(connection);
-        }
-    }
-
-    public void createView(int facultyId) throws DAOException {
-        Connection connection = Connector.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(CREATE_VIEW_WITH_SUM_MARK);
-            preparedStatement.setInt(1, facultyId);
-            preparedStatement.executeUpdate();
-        } catch (SQLException exception) {
-            throw new DAOException("message", exception);
-        } finally {
-            Connector.releaseConnection(connection);
-        }
-    }
-
-    public int findUserSumMark(int id) throws DAOException {
-        Connection connection = Connector.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(FIND_USER_SUM_MARK);
-            preparedStatement.setInt(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt("sumMark");
-            }
-            return 0;
-        } catch (SQLException exception) {
-            throw new DAOException("message", exception);
-        } finally {
-            Connector.releaseConnection(connection);
-        }
-    }
-
-    @Override
-    public int findRatingApproved(User user) throws DAOException {
-        return findRatingApprovedPattern(user, FIND_RATING_APPROVED);
-    }
-
-    @Override
-    public int findSameRatingApproved(User user) throws DAOException {
-        return findRatingApprovedPattern(user, COUNT_WITH_SAME_RATING_APPROVED);
-    }
-
-    @Override
-    public int findRatingApprovedPattern(User user, String pattern) throws DAOException {
-        Connection connection = Connector.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(pattern);
-            int facultyId;
-            if (user.getSpecialty() == null) {
-                facultyId = user.getRequestSpecialty().getId();
-            } else {
-                facultyId = user.getSpecialty().getId();
-            }
-            preparedStatement.setInt(1, facultyId);
-            preparedStatement.setInt(2, user.getFormOfTraining());
-            preparedStatement.setInt(3, findUserSumMark(user.getId()));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1) + 1;
-            }
-            return -1;
-        } catch (SQLException exception) {
-            throw new DAOException("message", exception);
-        } finally {
-            Connector.releaseConnection(connection);
-        }
-    }
-
-    @Override
-    public int findRatingAll(User user) throws DAOException {
-        return findRatingAllPattern(user, FIND_RATING_ALL);
-    }
-
-    @Override
-    public int findSameRatingAll(User user) throws DAOException {
-        return findRatingAllPattern(user, COUNT_WITH_SAME_RATING_ALL);
-    }
-
-    @Override
-    public int findRatingAllPattern(User user, String pattern) throws DAOException {
-        Connection connection = Connector.getConnection();
-        try {
-            PreparedStatement preparedStatement = connection.prepareStatement(pattern);
-            int facultyId;
-            if (user.getSpecialty() == null) {
-                facultyId = user.getRequestSpecialty().getId();
-            } else {
-                facultyId = user.getSpecialty().getId();
-            }
-            preparedStatement.setInt(1, facultyId);
-            preparedStatement.setInt(2, facultyId);
-            preparedStatement.setInt(3, user.getFormOfTraining());
-            preparedStatement.setInt(4, findUserSumMark(user.getId()));
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if (resultSet.next()) {
-                return resultSet.getInt(1) + 1;
-            }
-            return -1;
-        } catch (SQLException exception) {
-            throw new DAOException("message", exception);
-        } finally {
-            Connector.releaseConnection(connection);
-        }
-    }
-
-    @Override
-    public void deleteAndCreateViewRating(User user) throws DAOException {
-        int facultyId;
-        if (user.getSpecialty() == null) {
-            facultyId = user.getRequestSpecialty().getId();
-        } else {
-            facultyId = user.getSpecialty().getId();
-        }
-        deleteView();
-        createView(facultyId);
-    }
-
 
     @Override
     public void update(User user) throws DAOException {
