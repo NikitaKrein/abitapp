@@ -63,51 +63,6 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getUserRatingApproved(User user) throws ServiceException {
-        try {
-            return userDAO.findRatingApproved(user);
-        } catch (DAOException daoException) {
-            throw new ServiceException("message", daoException);
-        }
-    }
-
-    @Override
-    public int getUserRatingAll(User user) throws ServiceException {
-        try {
-            return userDAO.findRatingAll(user);
-        } catch (DAOException daoException) {
-            throw new ServiceException("message", daoException);
-        }
-    }
-
-    @Override
-    public int getCountOfUserWithSameRatingAll(User user) throws ServiceException {
-        try {
-            return userDAO.findSameRatingAll(user);
-        } catch (DAOException daoException) {
-            throw new ServiceException("message", daoException);
-        }
-    }
-
-    @Override
-    public int getCountOfUserWithSameRatingApproved(User user) throws ServiceException {
-        try {
-            return userDAO.findSameRatingApproved(user);
-        } catch (DAOException daoException) {
-            throw new ServiceException("message", daoException);
-        }
-    }
-
-    @Override
-    public void makeView(User user) throws ServiceException {
-        try {
-            userDAO.deleteAndCreateViewRating(user);
-        } catch (DAOException daoException) {
-            throw new ServiceException("message", daoException);
-        }
-    }
-
-    @Override
     public void acceptedUpdateUserSpecialty(int id, int specialtyId) throws ServiceException {
         try {
             userDAO.acceptedUpdateUserSpecialty(id, specialtyId);

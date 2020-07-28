@@ -11,11 +11,6 @@ public interface UserService {
     public User findUserById(int id) throws ServiceException;
     public void updateUserRequest(int requestSpecialtyId, int formOfTraining, int id) throws ServiceException;
     public void updateUser(User user) throws ServiceException;
-    public int getUserRatingApproved(User user) throws ServiceException;
-    public int getUserRatingAll(User user) throws ServiceException;
-    public int getCountOfUserWithSameRatingAll(User user) throws ServiceException;
-    public int getCountOfUserWithSameRatingApproved(User user) throws ServiceException;
-    public void makeView(User user) throws ServiceException;
     public void acceptedUpdateUserSpecialty(int id, int specialtyId) throws ServiceException;
     public void rejectUpdateUserSpecialty(int id, String message) throws ServiceException;
 
