@@ -8,11 +8,15 @@ import by.epam.krein.abitapp.service.SpecialtyService;
 import by.epam.krein.abitapp.service.ServiceFactory;
 import by.epam.krein.abitapp.service.UniversityService;
 import by.epam.krein.abitapp.util.UniversityUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 public class UniversityCatalog implements Command {
+
+    private final Logger logger = LoggerFactory.getLogger(UniversityCatalog.class);
 
     ServiceFactory serviceFactory = ServiceFactory.getInstance();
     UniversityService universityService = serviceFactory.getUniversityService();
@@ -20,15 +24,20 @@ public class UniversityCatalog implements Command {
     @Override
     public CommandName callCommandMethod(HttpServletRequest req) throws CommandException{
         String categoryId = UniversityUtils.getId(req);
+        List<University> universities;
+
         if(UniversityUtils.checkId(categoryId)){
+            logger.info("Failed, incorrect id in path.");
             return CommandName.ERROR.getCommand().callCommandMethod(req);
         }
+
         try {
-            List<University> universities = getCategoryList(req, Integer.parseInt(categoryId));
-            req.setAttribute("universities", universities);
+            universities = getCategoryList(req, Integer.parseInt(categoryId));
         } catch (RuntimeException exception) {
             throw new CommandException("University catalog failed ", exception);
         }
+
+        req.setAttribute("universities", universities);
         return CommandName.UNIVERSITY_CATALOG;
     }
 
