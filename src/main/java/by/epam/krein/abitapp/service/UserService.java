@@ -13,5 +13,6 @@ public interface UserService {
     public void updateUser(User user) throws ServiceException;
     public void acceptedUpdateUserSpecialty(int id, int specialtyId) throws ServiceException;
     public void rejectUpdateUserSpecialty(int id, String message) throws ServiceException;
+    public void updateUserPassword(int id, char[] password) throws ServiceException;
 
 }

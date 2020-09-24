@@ -7,7 +7,7 @@ public enum CommandName {
     SIGN_IN_BUTTON("/signIn", new SignInButton()),
     SIGN_UP_BUTTON("/signUp", new SignUpButton()),
     SIGN_OUT_BUTTON("/", new SignOutButton()),
-    EDIT_PROFILE_BUTTON("/editProfile", new EditProfileButton()),
+    EDIT_PROFILE_BUTTON("/editProfile.jsp", new EditProfileButton()),
     SUBMIT_FOR_FACULTY_BUTTON("/faculty", new SubmitForFacultyButton()),
     EDIT_ADMIN_INFORMATION_BUTTON("/admin/profile", new EditAdminInformationButton()),
     ADMIN_EDIT_SPECIALTY_EXAM_BUTTON("/admin/profile", new AdminUpdateSpecialtyExamsButton()),

@@ -2,6 +2,7 @@ package by.epam.krein.abitapp.controller.commandImpl;
 
 import by.epam.krein.abitapp.controller.Command;
 import by.epam.krein.abitapp.controller.CommandName;
+import by.epam.krein.abitapp.entity.Admin;
 import by.epam.krein.abitapp.entity.User;
 import by.epam.krein.abitapp.exception.CommandException;
 import by.epam.krein.abitapp.service.SecurityService;
@@ -30,19 +31,14 @@ public class EditProfileButton implements Command {
             return CommandName.ERROR.getCommand().callCommandMethod(req);
         }
         User user = (User) req.getSession().getAttribute("user");
-        if (!req.getParameter("email").equals("")) {
-            user.setEmail(req.getParameter("email"));
+        int id = user.getId();
+        if(!PasswordValidator.validatePassword(req)){
+            logger.info("Failed edit password, because passwords didn't match. (Email: " + req.getParameter("email") + ")");
+            return CommandName.EDIT_PROFILE_BUTTON;
         }
-        if (!req.getParameter("password").equals("")) {
-            if(!PasswordValidator.validatePassword(req)){
-                logger.info("Failed edit password, passwords didn't match. (Email: " + req.getParameter("email") + ")");
-            }else {
-                char[] password = securityService.createPassword(req.getParameter("password"));
-                user.setPassword(password);
-            }
-        }
+        char[] password = securityService.createPassword(req.getParameter("password"));
         try {
-            userService.updateUser(user);
+            userService.updateUserPassword(id, password);
         } catch (RuntimeException exception) {
             throw new CommandException("Edit profile failed ", exception);
         }

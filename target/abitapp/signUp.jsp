@@ -74,10 +74,10 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                     <input type="text" required placeholder="<fmt:message key="label.email"/>" name="email">
                                 </label>
                                 <label>
-                                    <input type="password" required placeholder="<fmt:message key="label.password"/>" name="password">
+                                    <input type="password" required placeholder="<fmt:message key="label.password"/>" name="password" minlength="6">
                                 </label>
                                 <label>
-                                    <input type="password" required placeholder="<fmt:message key="label.repeatPassword"/>" name="repeatPassword">
+                                    <input type="password" required placeholder="<fmt:message key="label.repeatPassword"/>" name="repeatPassword" minlength="6">
                                 </label>
                                 <label>
                                     <select name="certificate">
@@ -111,7 +111,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                     <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="thirdMark" class="form-control" min="1" max="100">
                                 </label>
                                 <label>
-                                    <select name="firstExam">
+                                    <select name="fourthExam">
                                         <option value="" disabled selected><fmt:message key="label.thirdSubject"/></option>
                                         <c:set var="exams" value="<%=Exam.values()%>" />
                                         <c:forEach var="exam" items="${exams}">
@@ -121,7 +121,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                     <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="fourthMark" class="form-control" min="1" max="100">
                                 </label>
                                 <label>
-                                    <select name="firstExam">
+                                    <select name="fifthExam">
                                         <option value="" disabled selected><fmt:message key="label.fourthSubject"/></option>
                                         <c:set var="exams" value="<%=Exam.values()%>" />
                                         <c:forEach var="exam" items="${exams}">

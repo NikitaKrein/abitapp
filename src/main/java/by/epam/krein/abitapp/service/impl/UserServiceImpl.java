@@ -80,4 +80,14 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    @Override
+    public void updateUserPassword(int id, char[] password) throws ServiceException {
+        try {
+            userDAO.updateUserPassword(id, password);
+        } catch (DAOException daoException) {
+            throw new ServiceException("message", daoException);
+        }
+    }
+
+
 }

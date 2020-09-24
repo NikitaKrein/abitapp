@@ -55,9 +55,12 @@ public class SignUpButton implements Command {
         char[] password = securityService.createPassword(req.getParameter("password"));
         user.setPassword(password);
         Map<Exam, Integer> examMark = new HashMap<>();
-        examMark.put(Exam.valueOf(req.getParameter("firstExam").replace(" ", "_").toUpperCase()), Integer.parseInt(req.getParameter("firstMark")));
+        examMark.put(Exam.valueOf(req.getParameter("certificate").replace(" ", "_").toUpperCase()), Integer.parseInt(req.getParameter("firstMark")));
         examMark.put(Exam.valueOf(req.getParameter("secondExam").replace(" ", "_").toUpperCase()), Integer.parseInt(req.getParameter("secondMark")));
         examMark.put(Exam.valueOf(req.getParameter("thirdExam").replace(" ", "_").toUpperCase()), Integer.parseInt(req.getParameter("thirdMark")));
+        examMark.put(Exam.valueOf(req.getParameter("fourthExam").replace(" ", "_").toUpperCase()), Integer.parseInt(req.getParameter("fourthMark")));
+        examMark.put(Exam.valueOf(req.getParameter("fifthExam").replace(" ", "_").toUpperCase()), Integer.parseInt(req.getParameter("fifthMark")));
+
         user.setExamMarks(examMark);
         return user;
     }

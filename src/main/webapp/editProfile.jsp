@@ -72,9 +72,6 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                             </header>
                             <div>
                                 <label>
-                                    <input type="text" placeholder="${sessionScope.user.email}" name="email">
-                                </label>
-                                <label>
                                     <input type="password" placeholder="*" name="password" minlength="6">
                                 </label>
                                 <label>

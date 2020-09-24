@@ -37,6 +37,7 @@ public class SQLUserDAO implements UserDAO {
     private static final String FIND_ALL = "SELECT * FROM user";
     private static final String FIND_USER_BY_ID = "SELECT * FROM user WHERE id = ?";
     private static final String FIND_USER_SCORE = "SELECT * FROM user_exam_mark WHERE user_id = ?";
+    private static final String UPDATE_USER_PASSWORD = "UPDATE user SET password = ? WHERE id = ?";
 
     private static final String UPDATE_USER_REQUEST = "UPDATE user SET request_specialty_id = ?, specialty_id = null, formOfTraining=?, adminMessage=null WHERE id = ?";
     private static final String UPDATE_USER = "UPDATE user SET name = ?, surname = ?, email = ?, password = ?, request_faculty_id = ?, faculty_id = ?, formOfTraining=?, adminMessage=?  WHERE id = ?";
@@ -330,6 +331,21 @@ public class SQLUserDAO implements UserDAO {
                 return setUser(resultSet);
             }
             return null;
+        } catch (SQLException exception) {
+            throw new DAOException("message", exception);
+        } finally {
+            Connector.releaseConnection(connection);
+        }
+    }
+
+    @Override
+    public void updateUserPassword(int id, char[] password) throws DAOException {
+        Connection connection = Connector.getConnection();
+        try {
+            PreparedStatement preparedStatement = connection.prepareStatement(UPDATE_USER_PASSWORD);
+            preparedStatement.setString(1, String.valueOf(password));
+            preparedStatement.setInt(2, id);
+            preparedStatement.executeUpdate();
         } catch (SQLException exception) {
             throw new DAOException("message", exception);
         } finally {

@@ -25,4 +25,5 @@ public interface UserDAO {
     public User setUser(ResultSet resultSet) throws DAOException;
     public void acceptedUpdateUserSpecialty(int id, int specialtyId) throws DAOException;
     public void rejectUpdateUserSpecialty(int id, String message) throws DAOException;
+    public void updateUserPassword(int id, char[] password) throws DAOException;
 }

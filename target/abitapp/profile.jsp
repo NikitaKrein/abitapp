@@ -65,7 +65,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
         <section id="banner">
             <header>
                 <h2>${sessionScope.user.name} ${sessionScope.user.surname}</h2>
-                <p>HELLO(Главная)</p>
+                <p><fmt:message key="label.hello"/></p>
             </header>
         </section>
     </section>
