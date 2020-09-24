@@ -41,7 +41,6 @@ public class ControllerServlet extends HttpServlet {
 
         if (commandName.toString().matches(".+BUTTON")) {
             resp.sendRedirect(req.getContextPath() + nextCommand.getJspAddress());
-            //resp.sendRedirect(req.getHeader("referer"));
         } else {
             req.getRequestDispatcher(nextCommand.getJspAddress()).forward(req, resp);
         }

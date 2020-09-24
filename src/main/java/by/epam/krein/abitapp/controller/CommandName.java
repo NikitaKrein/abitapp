@@ -24,7 +24,7 @@ public enum CommandName {
     UNIVERSITY_CATALOG("/university.jsp", new UniversityCatalog()),
     EDIT_PROFILE("/editProfile.jsp", new Profile()),
     FACULTY_PAGE("/faculty.jsp", new FacultyPage()),
-    LANGUAGE_BUTTON("/language.jsp", new LanguageButton()),
+    //LANGUAGE_BUTTON("/language.jsp", new LanguageButton()),
     ERROR("/error", new Error());
     //MAIN_PAGE("/", new MainPage());
 

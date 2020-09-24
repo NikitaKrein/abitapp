@@ -120,13 +120,13 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                         </table>
                     </section>
                     <button><fmt:message key="label.specialties"/></button>
-                    <c:forEach var="specialty" items="${requestScope.specialties}" varStatus="firstId">
+                    <c:forEach var="specialtyRequests" items="${requestScope.specialties}" varStatus="firstId">
                         <section id="intro" class="container">
                             <div>
                                 <input type="checkbox" class="read-more-state" id="post${firstId.index}"/>
                                 <header class="major">
                                     <label for="post${firstId.index}" class="read-more-trigger">
-                                        <h2>${specialty.name}</h2>
+                                        <h2>${specialtyRequests.name}</h2>
                                     </label>
                                 </header>
                                 <div class="read-more-wrap">
@@ -139,8 +139,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                                                id="post${firstId.index}${secondId.index}"/>
                                                         <label for="post${firstId.index}${secondId.index}"
                                                                class="read-more-trigger1">
-                                                            <h2><fmt:message
-                                                                    key="label.formOfTraining${rating.value.key}"/></h2>
+                                                            <h2><fmt:message key="label.formOfTraining${rating.value.key}"/></h2>
                                                         </label>
                                                         <div class="read-more-wrap1">
                                                             <div class="read-more-target1">

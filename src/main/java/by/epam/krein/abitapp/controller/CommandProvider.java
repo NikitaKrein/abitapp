@@ -20,7 +20,7 @@ public final class CommandProvider {
         repository.put(CommandName.FACULTY_PAGE, new FacultyPage());
         repository.put(CommandName.SUBMIT_FOR_FACULTY_BUTTON, new SubmitForFacultyButton());
         repository.put(CommandName.EDIT_PROFILE_BUTTON, new EditProfileButton());
-        repository.put(CommandName.LANGUAGE_BUTTON, new LanguageButton());
+       // repository.put(CommandName.LANGUAGE_BUTTON, new LanguageButton());
         repository.put(CommandName.EDIT_ADMIN_INFORMATION_BUTTON, new EditAdminInformationButton());
     }
 

@@ -81,44 +81,54 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                 </label>
                                 <label>
                                     <select name="certificate">
-                                        <option value="${exam}" disabled selected >Certificate
+                                        <option value="${exam}" disabled selected ><fmt:message key="label.CERTIFICATE"/>
                                         </option>
                                         <c:set var="exams" value="<%=Exam.values()%>"/>
                                         <c:forEach var="exam" items="${exams}">
                                             <option value="${exam}"><fmt:message key="label.${exam}"/></option>
                                         </c:forEach>
-                                        <input type="number" required placeholder="Mark" name="firstMark" class="form-control" min="1" max="100">
+                                        <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="firstMark" class="form-control" min="1" max="100">
                                     </select>
-                                </label>
-                                <label>
-                                    <select name="firstExam">
-                                        <option value="" disabled selected>First Subject</option>
-                                        <c:set var="exams" value="<%=Exam.values()%>" />
-                                        <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}">${exam}</option>
-                                        </c:forEach>
-                                    </select>
-                                    <input type="number" required placeholder="Mark" name="firstMark" class="form-control" min="1" max="100">
                                 </label>
                                 <label>
                                     <select name="secondExam">
-                                        <option value="" disabled selected>First Subject</option>
+                                        <option value="" disabled selected><fmt:message key="label.firstSubject"/></option>
                                         <c:set var="exams" value="<%=Exam.values()%>" />
                                         <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}">${exam}</option>
+                                            <option value="${exam}"><fmt:message key="label.${exam}"/></option>
                                         </c:forEach>
                                     </select>
-                                    <input type="number" required placeholder="Mark" name="secondMark" class="form-control" min="1" max="100">
+                                    <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="secondMark" class="form-control" min="1" max="100">
                                 </label>
                                 <label>
                                     <select name="thirdExam">
-                                        <option value="" disabled selected>First Subject</option>
+                                        <option value="" disabled selected><fmt:message key="label.secondSubject"/></option>
                                         <c:set var="exams" value="<%=Exam.values()%>" />
                                         <c:forEach var="exam" items="${exams}">
-                                            <option value="${exam}">${exam}</option>
+                                            <option value="${exam}"><fmt:message key="label.${exam}"/></option>
                                         </c:forEach>
                                     </select>
-                                    <input type="number" required placeholder="Mark" name="thirdMark" class="form-control" min="1" max="100">
+                                    <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="thirdMark" class="form-control" min="1" max="100">
+                                </label>
+                                <label>
+                                    <select name="firstExam">
+                                        <option value="" disabled selected><fmt:message key="label.thirdSubject"/></option>
+                                        <c:set var="exams" value="<%=Exam.values()%>" />
+                                        <c:forEach var="exam" items="${exams}">
+                                            <option value="${exam}"><fmt:message key="label.${exam}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                    <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="fourthMark" class="form-control" min="1" max="100">
+                                </label>
+                                <label>
+                                    <select name="firstExam">
+                                        <option value="" disabled selected><fmt:message key="label.fourthSubject"/></option>
+                                        <c:set var="exams" value="<%=Exam.values()%>" />
+                                        <c:forEach var="exam" items="${exams}">
+                                            <option value="${exam}"><fmt:message key="label.${exam}"/></option>
+                                        </c:forEach>
+                                    </select>
+                                    <input type="number" required placeholder="<fmt:message key="label.mark"/>" name="fifthMark" class="form-control" min="1" max="100">
                                 </label>
                                 <button class="button">
                                     <fmt:message key="label.signUpButton"/>

@@ -92,7 +92,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                     </header>
                 </c:forEach>
                 <header class="button">
-                    <p><fmt:message key="label.sum"/> ${sumOfMarks}</p>
+                    <p><fmt:message key="label.sum"/> - ${sumOfMarks}</p>
                 </header>
             </span>
         </div>

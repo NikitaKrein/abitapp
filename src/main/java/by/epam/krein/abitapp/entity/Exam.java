@@ -2,8 +2,15 @@ package by.epam.krein.abitapp.entity;
 
 public enum Exam {
     CERTIFICATE,
-    MATH,
+    MATHEMATICS,
     RUSSIAN_LANGUAGE,
-    dfghjklvfsknlfnvndlnvldsdsvsd,
-    PHYSICS;
-}
+    BELARUSIAN_LANGUAGE,
+    ENGLISH_LANGUAGE,
+    SOCIAL_SCIENCE,
+    BIOLOGY,
+    CHEMISTRY,
+    PHYSICS,
+    WORLD_HISTORY,
+    HISTORY_OF_BELARUS,
+    GEOGRAPHY;
+ }
