@@ -272,6 +272,18 @@
     <url-pattern>/error</url-pattern>
   </servlet-mapping>
 
+  <servlet>
+    <servlet-name>languageButton</servlet-name>
+    <servlet-class>by.epam.krein.abitapp.controller.ControllerServlet</servlet-class>
+    <init-param>
+      <param-name>command</param-name>
+      <param-value>language_button</param-value>
+    </init-param>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>languageButton</servlet-name>
+    <url-pattern>/languageButton</url-pattern>
+  </servlet-mapping>
 
 
   <filter>

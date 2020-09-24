@@ -38,6 +38,9 @@
 <body>
 <section id="header">
     <div class="container">
+        <h6><a href="${pageContext.request.contextPath}/languageButton?language=ru">ru</a>
+            <a>|</a>
+            <a href="${pageContext.request.contextPath}/languageButton?language=en">en</a></h6>
         <h1><a href="${pageContext.request.contextPath}/">ABITAPP</a></h1>
         <h1><fmt:message key="label.somethingWentWrong"/></h1>
         <button class="button" style="align-content: center">

@@ -7,7 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-@WebFilter("/language")
+@WebFilter("/languageButton")
 public class LanguageFilter implements Filter {
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
@@ -24,10 +24,8 @@ public class LanguageFilter implements Filter {
             Cookie cookie = new Cookie("language", req.getParameter("language"));
             resp.addCookie(cookie);
         }
-        StringBuilder URI  = new StringBuilder(req.getRequestURI());
-        int pos = URI.indexOf("language");
-        URI.delete(pos, URI.length());
-        resp.sendRedirect(URI.toString());
+        String URI = req.getHeader("Referer");
+        resp.sendRedirect(URI);
     }
 
     @Override

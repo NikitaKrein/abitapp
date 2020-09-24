@@ -29,9 +29,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
     <section id="header">
 
         <!-- Logo -->
-        <h6><a href="${pageContext.request.contextPath}/language?language=by">by</a>
-            <a href="${pageContext.request.contextPath}/language?language=ru">ru</a>
-            <a href="${pageContext.request.contextPath}/language?language=en">en</a></h6>
+        <h6><a href="${pageContext.request.contextPath}/languageButton?language=ru">ru</a>
+            <a>|</a>
+            <a href="${pageContext.request.contextPath}/languageButton?language=en">en</a></h6>
         <h1><a href="${pageContext.request.contextPath}/">ABITAPP</a></h1>
 
         <!-- Nav -->
