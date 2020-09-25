@@ -55,7 +55,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             }
             return null;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findById", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -79,7 +79,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             specialty.setNameOfExams(findSpecialtyExams(specialty.getId()));
             return specialty;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field setSpecialty", exception);
         }
     }
 
@@ -96,7 +96,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             }
             return specialties;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findByFacultyId", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -116,7 +116,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             }
             return exams;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findSpecialtyExams", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -139,7 +139,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             }
             return usersRating;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field getSpecialtyRating", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -159,7 +159,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.setInt(7, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field updateSpecialtyInformation", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -178,7 +178,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             }
             return -1;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findIdSpecialtyExam", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -194,7 +194,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field updateSpecialtyExam", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -210,7 +210,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field deleteFacultyExam", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -225,7 +225,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.setString(2, exam);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field createFacultyExam", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -255,7 +255,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             preparedStatement.setInt(5, findUniversityId(specialty));
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field createFaculty", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -272,7 +272,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             resultSet.next();
             return resultSet.getInt("id");
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUniversityId", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -318,7 +318,7 @@ public class SQLSpecialtyDAO implements SpecialtyDAO {
             }
             return users;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUsersWithRequest", exception);
         } finally {
             Connector.releaseConnection(connection);
         }

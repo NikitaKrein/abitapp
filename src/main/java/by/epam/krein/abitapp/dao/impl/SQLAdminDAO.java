@@ -43,7 +43,7 @@ public class SQLAdminDAO implements AdminDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field updatePassword", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -60,7 +60,7 @@ public class SQLAdminDAO implements AdminDAO {
             preparedStatement.setInt(3, admin.getUniversity().getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field create", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -74,7 +74,7 @@ public class SQLAdminDAO implements AdminDAO {
             preparedStatement.setInt(1, admin.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field delete", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -92,7 +92,7 @@ public class SQLAdminDAO implements AdminDAO {
             }
             return null;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findByEmail", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -111,7 +111,7 @@ public class SQLAdminDAO implements AdminDAO {
             admin.setUniversity(sqlUniversityDAO.findUniversity(resultSet.getInt("adminLevel")));
             return admin;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field setAdmin", exception);
         }
     }
 }

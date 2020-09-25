@@ -58,7 +58,7 @@ public class SQLUserDAO implements UserDAO {
             }
             return null;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUserByEmail", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -94,7 +94,7 @@ public class SQLUserDAO implements UserDAO {
 
             return user;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field setUser", exception);
         }
     }
 
@@ -111,7 +111,7 @@ public class SQLUserDAO implements UserDAO {
             }
             return examMark;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUserExamMark", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -138,7 +138,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.executeUpdate();
 
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field createUser", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -157,7 +157,7 @@ public class SQLUserDAO implements UserDAO {
                 preparedStatement.executeUpdate();
             }
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field createUserExamMark", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -174,7 +174,7 @@ public class SQLUserDAO implements UserDAO {
             }
             return -1;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUserIdByEmail", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -190,7 +190,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field updateUserRequest", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -211,7 +211,7 @@ public class SQLUserDAO implements UserDAO {
             }
             return userExamScore;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUserExamScore", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -227,7 +227,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field acceptedUpdateUserSpecialty", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -242,7 +242,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field rejectUpdateUserSpecialty", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -280,7 +280,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setInt(9, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field update", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -294,7 +294,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setInt(1, user.getId());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field delete", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -313,7 +313,7 @@ public class SQLUserDAO implements UserDAO {
             }
             return users;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findAll", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -332,7 +332,7 @@ public class SQLUserDAO implements UserDAO {
             }
             return null;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUserById", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -347,7 +347,7 @@ public class SQLUserDAO implements UserDAO {
             preparedStatement.setInt(2, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field updateUserPassword", exception);
         } finally {
             Connector.releaseConnection(connection);
         }

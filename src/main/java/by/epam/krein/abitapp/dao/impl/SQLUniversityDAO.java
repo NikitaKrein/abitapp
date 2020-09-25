@@ -50,7 +50,7 @@ public class SQLUniversityDAO implements UniversityDAO {
                 return null;
             }
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findUniversity", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -68,7 +68,7 @@ public class SQLUniversityDAO implements UniversityDAO {
             university.setFaculty(resultSet.getBoolean("isFaculty"));
             return university;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field setUniversity", exception);
         }
     }
 
@@ -85,7 +85,7 @@ public class SQLUniversityDAO implements UniversityDAO {
             }
             return universities;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findMain", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -105,7 +105,7 @@ public class SQLUniversityDAO implements UniversityDAO {
             }
             return universities;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findByParentId", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -121,7 +121,7 @@ public class SQLUniversityDAO implements UniversityDAO {
             preparedStatement.setInt(3, id);
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field updateUniversity", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -142,7 +142,7 @@ public class SQLUniversityDAO implements UniversityDAO {
             preparedStatement.setString(3, university.getInformation());
             preparedStatement.executeUpdate();
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field create", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -162,7 +162,7 @@ public class SQLUniversityDAO implements UniversityDAO {
             }
             return universities;
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field findAll", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
@@ -184,7 +184,7 @@ public class SQLUniversityDAO implements UniversityDAO {
                 delete(predUniversity);
             }
         } catch (SQLException exception) {
-            throw new DAOException("message", exception);
+            throw new DAOException("Field delete", exception);
         } finally {
             Connector.releaseConnection(connection);
         }
