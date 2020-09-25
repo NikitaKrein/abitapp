@@ -85,9 +85,10 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                             <i class="icon solid featured alt fa-address-card"></i>
                                             <header>
                                                 <label>
-                                                    <input type="text"
+                                                    <input type="number"
                                                            value="${requestScope.specialty.admissionPlanForFree}"
-                                                           name="admissionPlanForFree">
+                                                           name="admissionPlanForFree"
+                                                           min="0">
                                                 </label>
                                             </header>
                                             <p><i><fmt:message key="label.formOfTraining1"/></i></p>
@@ -98,9 +99,10 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                             <i class="icon solid featured fa-cog"></i>
                                             <header>
                                                 <label>
-                                                    <input type="text"
+                                                    <input type="number"
                                                            value="${requestScope.specialty.admissionPlanForPaid}"
-                                                           name="admissionPlanForPaid">
+                                                           name="admissionPlanForPaid"
+                                                           min="0">
                                                 </label>
                                             </header>
                                             <p><i><fmt:message key="label.formOfTraining2"/></i></p>
@@ -111,9 +113,10 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                             <i class="icon solid featured alt2 fa-star"></i>
                                             <header>
                                                 <label>
-                                                    <input type="text"
+                                                    <input type="number"
                                                            value="${requestScope.specialty.admissionPlanForCorrespondenceCourseForFree}"
-                                                           name="admissionPlanForCorrespondenceCourseForFree">
+                                                           name="admissionPlanForCorrespondenceCourseForFree"
+                                                           min="0">
                                                 </label>
                                             </header>
                                             <p><i><fmt:message key="label.formOfTraining3"/></i></p>
@@ -124,9 +127,10 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                             <i class="icon solid featured alt2 fa-star"></i>
                                             <header>
                                                 <label>
-                                                    <input type="text"
+                                                    <input type="number"
                                                            value="${requestScope.specialty.admissionPlanForCorrespondenceCourseForPaid}"
-                                                           name="admissionPlanForCorrespondenceCourseForPaid">
+                                                           name="admissionPlanForCorrespondenceCourseForPaid"
+                                                           min="0">
                                                 </label>
                                             </header>
                                             <p><i><fmt:message key="label.formOfTraining4"/></i></p>

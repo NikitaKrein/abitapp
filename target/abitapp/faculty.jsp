@@ -144,7 +144,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                         <section class="first">
                                             <i class="icon solid featured fa-book-open"></i>
                                             <header>
-                                                <h2>${exam}</h2>
+                                                <h2><fmt:message key="label.${exam}"/></h2>
                                             </header>
                                         </section>
                                     </div>
@@ -156,7 +156,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                             <div class="row">
                                 <div class="col-3 col-12-medium">
                                     <section class="middle">
-                                        <i class="icon solid featured alt fa-address-card"></i>
+                                        <i class="icon solid featured alt2 fa-star"></i>
                                         <header>
                                             <h2>${specialtyRequests.key.admissionPlanForFree}</h2>
                                         </header>
@@ -183,7 +183,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                 </div>
                                 <div class="col-3 col-12-medium">
                                     <section class="middle">
-                                        <i class="icon solid featured alt2 fa-star"></i>
+                                        <i class="icon solid featured fa-cog"></i>
                                         <header>
                                             <h2>${specialtyRequests.key.admissionPlanForCorrespondenceCourseForPaid}</h2>
                                         </header>
