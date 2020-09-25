@@ -153,9 +153,9 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                             <header>
                                                 <label>
                                                     <select name="Exam${exam}">
-                                                        <option>${exam}</option>
+                                                        <option><fmt:message key="label.${exam}"/></option>
                                                         <c:forEach var="newExam" items="${requestScope.exams}">
-                                                            <option value="${newExam}">${newExam}</option>
+                                                            <option value="${newExam}"><fmt:message key="label.${newExam}"/></option>
                                                         </c:forEach>
                                                     </select>
                                                 </label>
@@ -175,7 +175,7 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
                                         <label>
                                             <select name="newExam">
                                                 <c:forEach var="newExam" items="${requestScope.exams}">
-                                                    <option value="${newExam}">${newExam}</option>
+                                                    <option value="${newExam}"><fmt:message key="label.${newExam}"/></option>
                                                 </c:forEach>
                                             </select>
                                         </label>

@@ -100,16 +100,6 @@ Free for personal and commercial use under the CCA 3.0 license (html5up.net/lice
 </div>
 
 
-<!-- Footer -->
-<!-- Copyright -->
-<div id="copyright">
-    <ul class="links">
-        <li>&copy; Untitled. All rights reserved.</li>
-        <li>Design: <a href="http://html5up.net">HTML5 UP</a></li>
-    </ul>
-</div>
-
-
 <!-- Scripts -->
 <script src="${pageContext.request.contextPath}/view/assets/js/jquery.min.js"></script>
 <script src="${pageContext.request.contextPath}/view/assets/js/jquery.dropotron.min.js"></script>
